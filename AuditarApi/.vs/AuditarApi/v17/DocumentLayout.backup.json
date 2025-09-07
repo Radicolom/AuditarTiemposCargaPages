@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\appsettings.json",
+              "RelativeDocumentMoniker": "AuditarApi\\appsettings.json",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\appsettings.json",
+              "RelativeToolTip": "AuditarApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-09-07T20:10:18.137Z",
+              "EditorCaption": ""
             }
           ]
         }

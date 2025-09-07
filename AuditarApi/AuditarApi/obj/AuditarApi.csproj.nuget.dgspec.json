@@ -1,17 +1,184 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\AuditarApi\\AuditarApi.csproj": {}
+    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\AuditarApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\AuditarApi\\AuditarApi.csproj": {
+    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\AuditarApi\\AuditarApi.csproj",
-        "projectName": "AuditarApi",
-        "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\AuditarApi\\AuditarApi.csproj",
+        "projectUniqueName": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Application.csproj",
+        "projectName": "Application",
+        "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Radicolom\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarApi\\AuditarApi\\obj\\",
+        "outputPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Radicolom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\Dominio.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\AuditarApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\AuditarApi.csproj",
+        "projectName": "AuditarApi",
+        "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\AuditarApi.csproj",
+        "packagesPath": "C:\\Users\\Radicolom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Radicolom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\Dominio.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\Dominio.csproj",
+        "projectName": "Dominio",
+        "projectPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\Dominio.csproj",
+        "packagesPath": "C:\\Users\\Radicolom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,9 +217,13 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Swashbuckle.AspNetCore": {
+            "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.6.2, )"
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.8, )"
             }
           },
           "imports": [
@@ -67,9 +238,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
