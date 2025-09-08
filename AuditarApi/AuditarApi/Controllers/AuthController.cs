@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
         // ... Generar token y respuesta ...
         var response = new LoginResponseDto
         {
-            UsuarioId = usuario.UsuarioId,
+            Id = usuario.UsuarioId,
             NombreCompleto = $"{usuario.NombreUsuario} {usuario.ApellidoUsuario}",
             Rol = usuario.Rol.NombreRol,
             Token = "TOKEN_DE_EJEMPLO_TEMPORAL" // Próximo paso: Generar un JWT real

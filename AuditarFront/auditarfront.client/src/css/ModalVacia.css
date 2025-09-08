@@ -1,0 +1,58 @@
+/* ModalVacia estilos y animaciones */
+.modalvacia-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modal-fade-in 0.25s;
+}
+
+.modalvacia-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  min-width: 320px;
+  max-width: 95vw;
+  min-height: 120px;
+  max-height: 90vh;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  position: relative;
+  animation: modal-slide-in 0.35s cubic-bezier(.4,2,.6,1) both;
+}
+
+.modalvacia-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.8rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2;
+}
+.modalvacia-close:hover {
+  color: #0d6efd;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modal-slide-in {
+  from { transform: translateY(-40px) scale(0.95); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Animación de salida (opcional, para mejorar UX) */
+.animate-modal-out {
+  animation: modal-slide-out 0.3s cubic-bezier(.4,2,.6,1) both;
+}
+@keyframes modal-slide-out {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to   { transform: translateY(40px) scale(0.95); opacity: 0; }
+}

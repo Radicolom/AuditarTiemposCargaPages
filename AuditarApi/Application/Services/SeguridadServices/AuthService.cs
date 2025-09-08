@@ -1,13 +1,16 @@
-﻿using Dominio.Entities;
+﻿using Application.Services.SeguridadServices;
+using Dominio.Entities;
 using Dominio.ModuloSeguridad.Repositorio;
 
 public class AuthService
 {
     private readonly IUsuarioRepository _usuarioRepository;
+    private readonly PasswordService _passwordService;
 
-    public AuthService(IUsuarioRepository usuarioRepository)
+    public AuthService(IUsuarioRepository usuarioRepository, PasswordService passwordService)
     {
         _usuarioRepository = usuarioRepository;
+        _passwordService = passwordService;
     }
 
     public async Task<Usuario> ValidarCredenciales(string correo, string password)
@@ -19,8 +22,7 @@ public class AuthService
             return null;
         }
 
-        // 3. Verificar la contraseña (lógica de hashing pendiente)
-        if (usuario.PasswordUsuario != password)
+        if (!_passwordService.VerifyPassword(password, usuario.PasswordUsuario))
         {
             return null;
         }

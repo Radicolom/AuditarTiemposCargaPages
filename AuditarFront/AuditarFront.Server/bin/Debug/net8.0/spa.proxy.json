@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:63122",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarFront\\AuditarFront.Server\\..\\auditarfront.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

@@ -173,3 +173,4 @@ C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\AuditarApi\obj\Debug\net8.0\AuditarApi.pdb
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\AuditarApi\obj\Debug\net8.0\AuditarApi.genruntimeconfig.cache
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\AuditarApi\obj\Debug\net8.0\ref\AuditarApi.dll
+C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\AuditarApi\bin\Debug\net8.0\BCrypt.Net-Next.dll

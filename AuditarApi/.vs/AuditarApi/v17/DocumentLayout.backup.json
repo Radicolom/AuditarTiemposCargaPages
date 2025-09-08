@@ -3,8 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\application\\services\\configuracionservices\\configuracionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|solutionrelative:application\\services\\configuracionservices\\configuracionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\repositorios\\moduloconfiguracionapi\\menurepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\repositorios\\moduloconfiguracionapi\\menurepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\dominio\\moduloseguridad\\repositorio\\irolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|solutionrelative:dominio\\moduloseguridad\\repositorio\\irolrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\dominio\\moduloconfiguracion\\repositorio\\imenurepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|solutionrelative:dominio\\moduloconfiguracion\\repositorio\\imenurepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\application\\vistas\\moduloseguridad\\rolvista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|solutionrelative:application\\vistas\\moduloseguridad\\rolvista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\application\\vistas\\moduloconfiguracion\\menuvista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|solutionrelative:application\\vistas\\moduloconfiguracion\\menuvista.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\controllers\\configuracioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\controllers\\configuracioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\application\\services\\seguridadservices\\seguridadservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|solutionrelative:application\\services\\seguridadservices\\seguridadservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\dominio\\moduloseguridad\\repositorio\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC5DC0C5-C28C-4DF9-83EC-1E0F524FC5D5}|Dominio\\Dominio.csproj|solutionrelative:dominio\\moduloseguridad\\repositorio\\iusuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\auditarapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6A8A279E-CE86-4731-9F24-B14B6425BF46}|AuditarApi\\AuditarApi.csproj|solutionrelative:auditarapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|c:\\users\\radicolom\\documents\\proyectos\\auditarinspectia\\auditartiemposcargapages\\auditarapi\\application\\services\\seguridadservices\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7D98C692-C21F-47D9-9081-C38F95AD236B}|Application\\Application.csproj|solutionrelative:application\\services\\seguridadservices\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +58,162 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConfiguracionController.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Controllers\\ConfiguracionController.cs",
+              "RelativeDocumentMoniker": "AuditarApi\\Controllers\\ConfiguracionController.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Controllers\\ConfiguracionController.cs",
+              "RelativeToolTip": "AuditarApi\\Controllers\\ConfiguracionController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:43:57.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RolVista.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Vistas\\ModuloSeguridad\\RolVista.cs",
+              "RelativeDocumentMoniker": "Application\\Vistas\\ModuloSeguridad\\RolVista.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Vistas\\ModuloSeguridad\\RolVista.cs",
+              "RelativeToolTip": "Application\\Vistas\\ModuloSeguridad\\RolVista.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:42:11.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MenuVista.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Vistas\\ModuloConfiguracion\\MenuVista.cs",
+              "RelativeDocumentMoniker": "Application\\Vistas\\ModuloConfiguracion\\MenuVista.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Vistas\\ModuloConfiguracion\\MenuVista.cs",
+              "RelativeToolTip": "Application\\Vistas\\ModuloConfiguracion\\MenuVista.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:42:08.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IMenuRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloConfiguracion\\Repositorio\\IMenuRepository.cs",
+              "RelativeDocumentMoniker": "Dominio\\ModuloConfiguracion\\Repositorio\\IMenuRepository.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloConfiguracion\\Repositorio\\IMenuRepository.cs",
+              "RelativeToolTip": "Dominio\\ModuloConfiguracion\\Repositorio\\IMenuRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:41:26.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IRolRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloSeguridad\\Repositorio\\IRolRepository.cs",
+              "RelativeDocumentMoniker": "Dominio\\ModuloSeguridad\\Repositorio\\IRolRepository.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloSeguridad\\Repositorio\\IRolRepository.cs",
+              "RelativeToolTip": "Dominio\\ModuloSeguridad\\Repositorio\\IRolRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:41:22.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MenuRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Repositorios\\ModuloConfiguracionApi\\MenuRepository.cs",
+              "RelativeDocumentMoniker": "AuditarApi\\Repositorios\\ModuloConfiguracionApi\\MenuRepository.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Repositorios\\ModuloConfiguracionApi\\MenuRepository.cs",
+              "RelativeToolTip": "AuditarApi\\Repositorios\\ModuloConfiguracionApi\\MenuRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:40:08.434Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\appsettings.json",
-              "RelativeDocumentMoniker": "AuditarApi\\appsettings.json",
-              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\appsettings.json",
-              "RelativeToolTip": "AuditarApi\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-07T20:10:18.137Z",
+              "Title": "ConfiguracionService.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\ConfiguracionServices\\ConfiguracionService.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\ConfiguracionServices\\ConfiguracionService.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\ConfiguracionServices\\ConfiguracionService.cs",
+              "RelativeToolTip": "Application\\Services\\ConfiguracionServices\\ConfiguracionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:37:28.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SeguridadServices.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\SeguridadServices\\SeguridadServices.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\SeguridadServices\\SeguridadServices.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\SeguridadServices\\SeguridadServices.cs",
+              "RelativeToolTip": "Application\\Services\\SeguridadServices\\SeguridadServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-08T04:36:59.159Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Program.cs",
+              "RelativeDocumentMoniker": "AuditarApi\\Program.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Program.cs*",
+              "RelativeToolTip": "AuditarApi\\Program.cs*",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACEAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T23:30:57.613Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IUsuarioRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloSeguridad\\Repositorio\\IUsuarioRepository.cs",
+              "RelativeDocumentMoniker": "Dominio\\ModuloSeguridad\\Repositorio\\IUsuarioRepository.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Dominio\\ModuloSeguridad\\Repositorio\\IUsuarioRepository.cs",
+              "RelativeToolTip": "Dominio\\ModuloSeguridad\\Repositorio\\IUsuarioRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T23:28:21.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AuditarApi\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\AuditarApi\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AuditarApi\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T23:24:21.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\SeguridadServices\\AuthService.cs",
+              "RelativeDocumentMoniker": "Application\\Services\\SeguridadServices\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Radicolom\\Documents\\Proyectos\\AuditarINSPECTIA\\AuditarTiemposCargaPages\\AuditarApi\\Application\\Services\\SeguridadServices\\AuthService.cs",
+              "RelativeToolTip": "Application\\Services\\SeguridadServices\\AuthService.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-07T23:23:35.365Z",
               "EditorCaption": ""
             }
           ]

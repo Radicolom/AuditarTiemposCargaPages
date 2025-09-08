@@ -1,0 +1,35 @@
+
+
+/* Estilos adicionales para todo el cuerpo de la página */
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #dbeafe 0%, #f0f9ff 50%, #a7f3d0 100%);
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+
+/* Estilos para el menu */
+.menu-color {
+    background: rgba(33, 37, 41, 0.9);
+    color: white;
+    z-index: 1040;
+    height: 5rem;
+}
+
+/* Estilos para el header */
+.header-color {
+    background: linear-gradient(242deg, rgb(36 79 165) 30%, rgb(128 159 223) 100%);
+    padding: 0px !important;
+    height: 5rem;
+    vertical-align: middle;
+}

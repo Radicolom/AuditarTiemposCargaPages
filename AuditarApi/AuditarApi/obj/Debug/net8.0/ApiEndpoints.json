@@ -1,0 +1,50 @@
+[
+  {
+    "ContainingType": "AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginRequest",
+        "Type": "LoginRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ConfiguracionController",
+    "Method": "MenuObtener",
+    "RelativePath": "api/Configuracion/MenuObtener",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rolRequest",
+        "Type": "RolVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SeguridadController",
+    "Method": "RolObtener",
+    "RelativePath": "api/Seguridad/RolObtener",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rolRequest",
+        "Type": "RolVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

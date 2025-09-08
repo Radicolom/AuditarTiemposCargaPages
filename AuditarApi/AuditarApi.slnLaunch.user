@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "AuditarApi\\AuditarApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\AuditarFront\\AuditarFront.Server\\AuditarFront.Server.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

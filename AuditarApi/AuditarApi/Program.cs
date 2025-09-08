@@ -1,4 +1,8 @@
+using Application.Services.SeguridadServices;
+using Dominio.Data;
+using Dominio.ModuloConfiguracion.Repositorio;
 using Dominio.ModuloSeguridad.Repositorio;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -12,9 +16,37 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionAuditar")));
 
+#region Usuario 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<PasswordService>();
+#endregion
+
+#region Rol
+builder.Services.AddScoped<IRolRepository, RolRepository>();
+builder.Services.AddScoped<SeguridadServices>();
+#endregion
+
+#region Menu
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<ConfiguracionServices>();
+#endregion
+
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -27,8 +59,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
