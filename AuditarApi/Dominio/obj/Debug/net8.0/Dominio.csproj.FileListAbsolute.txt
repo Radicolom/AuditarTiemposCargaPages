@@ -1,6 +1,7 @@
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\bin\Debug\net8.0\Dominio.deps.json
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\bin\Debug\net8.0\Dominio.dll
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\bin\Debug\net8.0\Dominio.pdb
+C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.csproj.AssemblyReference.cache
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.AssemblyInfoInputs.cache
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.AssemblyInfo.cs
@@ -10,4 +11,3 @@ C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\refint\Dominio.dll
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.pdb
 C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\ref\Dominio.dll
-C:\Users\Radicolom\Documents\Proyectos\AuditarINSPECTIA\AuditarTiemposCargaPages\AuditarApi\Dominio\obj\Debug\net8.0\Dominio.csproj.AssemblyReference.cache

@@ -10,5 +10,8 @@ namespace Dominio.ModuloSeguridad.Repositorio
     public interface IRolRepository
     {
         List<Rol> GetByRolAsync(bool? EstadoRol = null);
+        Task<Rol> AddRolAsync(Rol rol);
+        Task<Rol> UpdateRolAsync(Rol rol);
+        Task<bool> DeleteRolAsync(int rolId);
     }
 }

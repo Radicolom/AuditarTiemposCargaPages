@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
         {
             Id = usuario.UsuarioId,
             NombreCompleto = $"{usuario.NombreUsuario} {usuario.ApellidoUsuario}",
-            Rol = usuario.Rol.NombreRol,
+            Rol = usuario.Rol?.NombreRol ?? string.Empty,
             Token = "TOKEN_DE_EJEMPLO_TEMPORAL" // Próximo paso: Generar un JWT real
         };
 

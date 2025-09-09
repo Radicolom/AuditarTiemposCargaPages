@@ -13,13 +13,47 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
-
     public async Task<Usuario> GetByCorreoAsync(string correo)
     {
         #pragma warning disable CS8603 // Posible tipo de valor devuelto de referencia nulo
         return await _context.Usuarios
-                             .Include(u => u.Rol)
-                             .FirstOrDefaultAsync(u => u.CorreoUsuario == correo);
+                                .Include(u => u.Rol)
+                                .FirstOrDefaultAsync(u => u.CorreoUsuario == correo);
         #pragma warning restore CS8603 // Posible tipo de valor devuelto de referencia nulo
+    }
+
+    public List<Usuario> GetByUsuarioAsync(bool? estado)
+    {
+        var query = _context.Usuarios.Include(u => u.Rol).AsQueryable();
+        if (estado.HasValue)
+        {
+            query = query.Where(u => u.EstadoUsuario == estado.Value);
+        }
+        return query.ToList();
+    }
+
+    public async Task<Usuario> AddUsuarioAsync(Usuario usuario)
+    {
+        await _context.Usuarios.AddAsync(usuario);
+        await _context.SaveChangesAsync();
+        return usuario;
+    }
+
+    public async Task<Usuario> UpdateUsuarioAsync(Usuario usuario)
+    {
+        _context.Usuarios.Update(usuario);
+        await _context.SaveChangesAsync();
+        return usuario;
+    }
+
+    public async Task<bool> DeleteUsuarioAsync(int usuarioId)
+    {
+        var usuario = await _context.Usuarios.FindAsync(usuarioId);
+        if (usuario == null)
+            return false;
+
+        _context.Usuarios.Remove(usuario);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

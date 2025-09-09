@@ -19,23 +19,45 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionAuditar")));
 
-#region Usuario 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<PasswordService>();
-#endregion
-
-#region Rol
-builder.Services.AddScoped<IRolRepository, RolRepository>();
+#region Seguridad
 builder.Services.AddScoped<SeguridadServices>();
+
+    #region Usuario 
+    builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+    builder.Services.AddScoped<AuthService>();
+    builder.Services.AddScoped<PasswordService>();
+    #endregion
+
+    #region Rol
+    builder.Services.AddScoped<IRolRepository, RolRepository>();
+    builder.Services.AddScoped<SeguridadServices>();
+    #endregion
+
+    #region RolOperacionAccion
+    builder.Services.AddScoped<IRolOperacionAccionRepository, RolOperacionAccionRepository>();
 #endregion
 
-#region Menu
-builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+#endregion
+
+#region Configuracion
 builder.Services.AddScoped<ConfiguracionServices>();
+
+    #region Menu
+    builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+    #endregion
+
+    #region MenuRol
+    builder.Services.AddScoped<IMenuRolRepository, MenuRolRepository>();
+    #endregion
+
+    #region Accion
+    builder.Services.AddScoped<IAccionRepository, AccionRepository>();
+    #endregion
+
+    #region Servicio
+    builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+    #endregion
 #endregion
-
-
 
 builder.Services.AddCors(options =>
 {

@@ -10,5 +10,9 @@ namespace Dominio.ModuloSeguridad.Repositorio
     public interface IUsuarioRepository
     {
         Task<Usuario> GetByCorreoAsync(string correo);
+        List<Usuario> GetByUsuarioAsync(bool? estado);
+        Task<Usuario> AddUsuarioAsync(Usuario usuario);
+        Task<Usuario> UpdateUsuarioAsync(Usuario usuario);
+        Task<bool> DeleteUsuarioAsync(int usuarioId);
     }
 }

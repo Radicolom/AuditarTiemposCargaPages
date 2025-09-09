@@ -18,4 +18,28 @@ public class RolRepository : IRolRepository
                        .Where(r => r.EstadoRol == EstadoRol)
                        .ToList();
     }
+
+    public async Task<Rol> AddRolAsync(Rol rol)
+    {
+        await _context.Rols.AddAsync(rol);
+        await _context.SaveChangesAsync();
+        return rol;
+    }
+
+    public async Task<Rol> UpdateRolAsync(Rol rol)
+    {
+        _context.Rols.Update(rol);
+        await _context.SaveChangesAsync();
+        return rol;
+    }
+
+    public async Task<bool> DeleteRolAsync(int rolId)
+    {
+        var rol = await _context.Rols.FindAsync(rolId);
+        if (rol == null)
+            return false;
+        _context.Rols.Remove(rol);
+        await _context.SaveChangesAsync();
+        return true;
+    }
 }

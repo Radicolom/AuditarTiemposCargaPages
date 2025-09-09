@@ -10,5 +10,8 @@ namespace Dominio.ModuloConfiguracion.Repositorio
     public interface IMenuRepository
     {
         List<Menu> GetByMenuAsync(bool? EstadoMenu = null);
+        Task<Menu> AddMenuAsync(Menu menu);
+        Task<Menu> UpdateMenuAsync(Menu menu);
+        Task<bool> DeleteMenuAsync(int menuId);
     }
 }
