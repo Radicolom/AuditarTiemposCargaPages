@@ -1,3 +1,17 @@
+/* Encabezado de tabla degradado reutilizable */
+.tabla-app-thead {
+    background: linear-gradient(163deg, rgb(99 115 149) 0%, rgb(30, 64, 175) 100%) !important;
+}
+.tabla-app-thead th {
+    color: #fff !important;
+    background-color: #ffffff00 !important;
+}
+/* Sidebar animado */
+.sidebar-animated {
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    overflow: hidden;
+    min-width: 0;
+}
 
 
 /* Estilos adicionales para todo el cuerpo de la página */

@@ -273,6 +273,16 @@
   },
   {
     "ContainingType": "SeguridadController",
+    "Method": "GetProtectedData",
+    "RelativePath": "api/Seguridad/protegido",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SeguridadController",
     "Method": "RolEditar",
     "RelativePath": "api/Seguridad/RolEditar",
     "HttpMethod": "PUT",

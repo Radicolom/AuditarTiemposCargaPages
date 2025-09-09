@@ -1,16 +1,37 @@
 import React from 'react';
 import { SelectorGenerico } from '../generico/Selectores';
 import { obtenerRoles } from '../consultas/roles';
+import { insertarUsuario } from '../consultas/users';
+import Swal from 'sweetalert2';
 
 <SelectorGenerico fetchOptions={obtenerRoles} valueKey="id" labelKey="nombre" />
 
-
 const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
+
+    const handleSave = async (formData) => {
+        try {
+            await insertarUsuario(formData);
+            await Swal.fire({
+                icon: 'success',
+                title: 'Usuario creado',
+                text: 'El usuario se ha registrado correctamente'
+            });
+            onSave(formData);
+        } catch (e) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al crear usuario',
+                text: 'Ha ocurrido un error al registrar el usuario'
+            });
+        }
+    };
+
     const [formData, setFormData] = React.useState({
         nombre: '',
         apellido: '',
         documento: '',
         correo: '',
+        telefono: '',
         rolId: ''
     });
 
@@ -19,9 +40,9 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(formData);
+        await handleSave(formData);
     };
     
 
@@ -67,6 +88,15 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
                     placeholder="Correo"
                     required
                 />
+                <input
+                    type="tel"
+                    name="telefono"
+                    value={formData.telefono}
+                    onChange={handleChange}
+                    className="form-control form-control-lg mb-2"
+                    placeholder="Teléfono"
+                    required
+                />
                 <SelectorGenerico
                     fetchOptions={obtenerRoles}
                     valueKey="id"
@@ -74,6 +104,7 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
                     name="rolId"
                     onChange={handleChange}
                     value={formData.rolId}
+                    required
                 />
             </div>
             <div className="d-flex justify-content-end gap-2">

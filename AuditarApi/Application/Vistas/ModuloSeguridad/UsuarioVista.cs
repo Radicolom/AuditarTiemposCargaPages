@@ -13,4 +13,5 @@
     public bool? Estado { get; set; }
     public int? RolId { get; set; }
     public string? RolNombre { get; set; }
+    public string? Password { get; set; }
 }

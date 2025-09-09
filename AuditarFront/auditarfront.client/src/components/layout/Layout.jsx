@@ -14,9 +14,10 @@ const Layout = ({ children }) => {
         <div className="d-flex flex-column min-vh-100">
             <div className="row h-100 flex-grow-1">
                 {/* Sidebar siempre a la izquierda */}
-                <div className={
-                    menuVisible ? "col-md-2" : "d-none"
-                }>
+                <div
+                    className={"sidebar-animated bg-transparent p-0 " + (menuVisible ? "col-md-2" : "")}
+                    style={{ width: menuVisible ? undefined : 0 }}
+                >
                     {menuVisible && <Menu toggleMenu={toggleMenu} />}
                 </div>
 

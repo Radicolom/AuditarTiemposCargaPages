@@ -1,4 +1,5 @@
 ﻿using Dominio.ModuloSeguridad.Repositorio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -65,12 +66,30 @@ public class SeguridadController : ControllerBase
     }
 
     [HttpPost("UsuarioInsertar")]
+    [AllowAnonymous] 
     public async Task<IActionResult> UsuarioInsertar([FromBody] UsuarioVista usuario)
     {
+        // --- ¡PUNTO CRÍTICO DE SEGURIDAD! ---
+        // Antes de llamar a tu servicio, o dentro de tu servicio,
+        // DEBES hashear la contraseña. No la guardes nunca en texto plano.
+        //
+        // Ejemplo de cómo hacerlo aquí mismo:
+        if (!string.IsNullOrEmpty(usuario.Password))
+        {
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
+        }
+        //
+        // Lo ideal es que esta lógica esté DENTRO de tu método _seguridadService.AddUsuarioAsync.
+
         var result = await _seguridadService.AddUsuarioAsync(usuario);
+
         if (result == null)
-            return BadRequest(new { message = "No se pudo insertar el usuario." });
-        return Ok(result);
+        {
+            return BadRequest(new { message = "No se pudo insertar el usuario. Verifique los datos (ej: el correo ya existe)." });
+        }
+
+        // Es buena práctica no devolver la contraseña, incluso si está hasheada.
+        return Ok(new { message = "Usuario creado exitosamente", userId = result.Id });
     }
 
     [HttpPut("UsuarioEditar")]
@@ -129,5 +148,16 @@ public class SeguridadController : ControllerBase
         return Ok(new { message = "Relación eliminada correctamente." });
     }
     #endregion
+
+
+    // --- ENDPOINT PROTEGIDO DE EJEMPLO ---
+    // Mantenemos este endpoint para que puedas probar que la autenticación con JWT funciona.
+    [HttpGet("protegido")]
+    [Authorize] // Para acceder aquí, se necesita un token JWT válido.
+    public IActionResult GetProtectedData()
+    {
+        var userEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+        return Ok(new { message = $"Hola {userEmail}, tienes acceso a esta información secreta." });
+    }
 
 }

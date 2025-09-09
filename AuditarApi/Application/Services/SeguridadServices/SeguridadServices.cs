@@ -126,7 +126,8 @@ public class SeguridadServices
             AutenticacionDobleFactor = usuarioVista.DobleFactor,
             AutenticacionIntentos = usuarioVista.Intentos,
             EstadoUsuario = usuarioVista.Estado,
-            RolId = usuarioVista.RolId
+            RolId = usuarioVista.RolId,
+            PasswordUsuario = usuarioVista.Password
         };
     }
 

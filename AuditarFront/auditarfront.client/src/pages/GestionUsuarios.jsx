@@ -2,23 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
 import UserForm from './UserForm'; 
 import ModalVacia from '../generico/ModalVacia';
+import { obtenerUsuarios } from '../consultas/users';
 
 const GestionUsuarios = () => {
-    // --- ESTADOS ---
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            nombre: 'Admin',
-            apellido: 'Principal',
-            documento: '123456789',
-            correo: 'admin@inspectia.com',
-            rolId: 1,
-            rolNombre: 'Admin'
-        }
-    ]);
+    const [users, setUsers] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    // TODO: Cargar usuarios desde la API con useEffect
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const data = await obtenerUsuarios();
+            setUsers(data || []);
+        };
+        fetchUsers();
+    }, []);
+
 
     const roles = { 1: 'Admin', 2: 'Supervisor', 3: 'Operador' };
 
@@ -33,21 +30,30 @@ const GestionUsuarios = () => {
     
 
     return (
-        <div className="card container p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
+        <div className="card p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
             {/* Cabecera de la pagina */}
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-                <div>
-                    <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight mb-1 flex items-center gap-2">
-                        <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-lg font-semibold">Gestión de Usuarios</span>
-                    </h1>
-                    <p className="text-gray-500 text-sm mt-1">
-                        Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario.
-                    </p>
+            <div className="rounded-4 mb-4 p-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3"
+                style={{
+                    background: 'linear-gradient(90deg, #2563eb 0%, #1e40af 100%)',
+                    boxShadow: '0 4px 24px 0 rgba(30,64,175,0.10)',
+                }}>
+                <div className="d-flex flex-column flex-md-row align-items-center gap-3">
+                    <div className="d-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-25" style={{width: 56, height: 56}}>
+                        <Plus size={32} color="#fff" />
+                    </div>
+                    <div>
+                        <h1 className="mb-1 fw-bold text-white" style={{fontSize: '2.2rem', letterSpacing: '-1px'}}>
+                            Gestión de Usuarios
+                        </h1>
+                        <p className="mb-0 text-white-50" style={{fontWeight: 400}}>
+                            Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario.
+                        </p>
+                    </div>
                 </div>
-                {/* Botón Bootstrap */}
                 <button
                     type="button"
-                    className="btn btn-primary d-flex align-items-center"
+                    className="btn btn-light d-flex align-items-center px-4 py-2 fw-bold shadow-sm"
+                    style={{fontSize: '1.1rem'}}
                     onClick={handleToggleForm}
                 >
                     <Plus size={20} className="me-2" />
@@ -55,33 +61,31 @@ const GestionUsuarios = () => {
                 </button>
             </div>
 
-            <div className="bg-white shadow-xl rounded-2xl overflow-x-auto border border-gray-100">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gradient-to-r from-gray-100 to-gray-200">
+            <div className="bg-white shadow-xl rounded-4 overflow-x-auto border border-gray-100">
+                <table className="table table-hover align-middle table-bordered mb-0 rounded-4 overflow-hidden">
+                    <thead className="tabla-app-thead">
                         <tr>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</th>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Documento</th>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Correo</th>
-                            <th className="py-4 px-6 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Rol</th>
-                            <th className="py-4 px-6 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
+                            <th>Nombre Completo</th>
+                            <th>Documento</th>
+                            <th>Correo</th>
+                            <th className="text-center">Rol</th>
+                            <th className="text-center">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
-                         {users.map(user => (
-                            <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-100">
-                                <td className="py-3 px-6 text-left whitespace-nowrap">{user.nombre} {user.apellido}</td>
-                                <td className="py-3 px-6 text-left">{user.documento}</td>
-                                <td className="py-3 px-6 text-left">{user.correo}</td>
-                                <td className="py-3 px-6 text-center">
-                                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${user.rolId === 1 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.nombre} {user.apellido}</td>
+                                <td>{user.documento}</td>
+                                <td>{user.correo}</td>
+                                <td className="text-center">
+                                    <span className={`badge ${user.rolId === 1 ? 'bg-danger' : 'bg-success'}`}>
                                         {user.rolNombre}
                                     </span>
                                 </td>
-                                <td className="py-3 px-6 text-center">
-                                    <div className="flex item-center justify-center space-x-4">
-                                        <button className="w-6 h-6 text-blue-600 hover:text-blue-900"><Edit size={18} /></button>
-                                        <button className="w-6 h-6 text-red-600 hover:text-red-900"><Trash2 size={18} /></button>
-                                    </div>
+                                <td className="text-center">
+                                    <button className="btn btn-sm btn-outline-primary me-2"><Edit size={18} /></button>
+                                    <button className="btn btn-sm btn-outline-danger"><Trash2 size={18} /></button>
                                 </td>
                             </tr>
                         ))}

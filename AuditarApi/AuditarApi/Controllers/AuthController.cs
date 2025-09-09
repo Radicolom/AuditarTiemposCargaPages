@@ -1,4 +1,5 @@
 ﻿using Dominio.ModuloSeguridad.Repositorio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -34,4 +35,6 @@ public class AuthController : ControllerBase
 
         return Ok(response);
     }
+
+
 }

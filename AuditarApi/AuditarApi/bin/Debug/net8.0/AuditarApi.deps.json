@@ -9,6 +9,7 @@
       "AuditarApi/1.0.0": {
         "dependencies": {
           "Application": "1.0.0",
+          "BCrypt.Net-Next": "4.0.3",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0",
           "Microsoft.EntityFrameworkCore.Design": "9.0.8",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.8",
