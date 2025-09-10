@@ -1,17 +1,46 @@
 using Application.Services.SeguridadServices;
 using Dominio.Data;
 using Dominio.ModuloConfiguracion.Repositorio;
+using Dominio.ModuloPages.Repositorio;
 using Dominio.ModuloSeguridad.Repositorio;
 using Microsoft.EntityFrameworkCore;
-
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var jwtKey = builder.Configuration["Jwt:Key"] ?? "1234567890ABCDEF1234567890ABCDEF";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "AuditarApi";
 
-builder.Services.AddControllers();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
+
+// Add services to the container.
+//
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -56,9 +85,20 @@ builder.Services.AddScoped<ConfiguracionServices>();
 
     #region Servicio
     builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+#endregion
+#endregion
+
+#region pagues
+builder.Services.AddScoped<PagesServices>();
+    #region Auditar
+    builder.Services.AddScoped<IAuditarPaginaRepository, AuditarPaginaRepository>();
+    #endregion
+    #region AuditarLog
+    builder.Services.AddScoped<IAuditarLogRepository, AuditarLogRepository>();
     #endregion
 #endregion
 
+#region CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -69,6 +109,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+#endregion
 
 var app = builder.Build();
 
@@ -82,6 +123,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

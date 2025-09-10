@@ -1,22 +1,24 @@
 import React from 'react';
-import { SelectorGenerico } from '../generico/Selectores';
-import { obtenerRoles } from '../consultas/roles';
-import { insertarUsuario } from '../consultas/users';
+import { Selectores } from '../generico/Selectores';
+import { obtenerRoles } from '../../llamadasApi/roles';
+import { insertarUsuario, modificarUsuario } from '../../llamadasApi/users';
 import Swal from 'sweetalert2';
 
-<SelectorGenerico fetchOptions={obtenerRoles} valueKey="id" labelKey="nombre" />
+<Selectores fetchOptions={obtenerRoles} valueKey="id" labelKey="nombre" />
 
-const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
+const UserForm = ({ onSave, onCancel, initialData }) => {
 
     const handleSave = async (formData) => {
         try {
-            await insertarUsuario(formData);
-            await Swal.fire({
-                icon: 'success',
-                title: 'Usuario creado',
-                text: 'El usuario se ha registrado correctamente'
-            });
-            onSave(formData);
+            let result = null;
+            if (initialData) {
+                result = await insertarUsuario(formData);
+            } else {
+                result = await modificarUsuario(formData);
+            }
+            if (result) {
+                onSave(result[0]);
+            }
         } catch (e) {
             Swal.fire({
                 icon: 'error',
@@ -26,14 +28,16 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
         }
     };
 
-    const [formData, setFormData] = React.useState({
-        nombre: '',
-        apellido: '',
-        documento: '',
-        correo: '',
-        telefono: '',
-        rolId: ''
-    });
+    const [formData, setFormData] = React.useState(
+        initialData || {
+            nombre: '',
+            apellido: '',
+            documento: '',
+            correo: '',
+            telefono: '',
+            rolId: ''
+        }
+    );
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,7 +53,7 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
     return (
         <form onSubmit={handleSubmit} className="card shadow p-4 border-0 h-100 w-100" style={{ maxWidth: 420 }}>
             <h2 className="h5 mb-4 fw-bold text-primary">
-                {modo === "editar" ? "Editar Usuario" : "Crear Usuario"}
+                {initialData ? "Editar Usuario" : "Crear Usuario"}
             </h2>
             <div className="mb-3">
                 <input
@@ -97,7 +101,7 @@ const UserForm = ({ onSave, onCancel, modo = "crear" }) => {
                     placeholder="Teléfono"
                     required
                 />
-                <SelectorGenerico
+                <Selectores
                     fetchOptions={obtenerRoles}
                     valueKey="id"
                     labelKey="nombre"

@@ -10,7 +10,7 @@ namespace Application.Services.SeguridadServices
     {
         public string HashPassword(string password)
         {
-            // Genera un "hash" de la contraseña. Este es el valor que guardarás en la BD.
+            // Genera un "hash" de la contraseña BD.
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
 

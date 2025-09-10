@@ -25,9 +25,9 @@ public class UsuarioRepository : IUsuarioRepository
     public List<Usuario> GetByUsuarioAsync(bool? estado)
     {
         var query = _context.Usuarios.Include(u => u.Rol).AsQueryable();
-        if (estado.HasValue)
+        if (estado is not null)
         {
-            query = query.Where(u => u.EstadoUsuario == estado.Value);
+            query = query.Where(u => u.EstadoUsuario == estado);
         }
         return query.ToList();
     }
@@ -36,7 +36,14 @@ public class UsuarioRepository : IUsuarioRepository
     {
         await _context.Usuarios.AddAsync(usuario);
         await _context.SaveChangesAsync();
-        return usuario;
+
+        var resultado = await _context.Usuarios
+                            .Include(u => u.Rol)
+                            .FirstOrDefaultAsync(u => u.UsuarioId == usuario.UsuarioId);
+
+        if (resultado == null) throw new InvalidOperationException("No se pudo agregar el usuario.");
+
+        return resultado;
     }
 
     public async Task<Usuario> UpdateUsuarioAsync(Usuario usuario)

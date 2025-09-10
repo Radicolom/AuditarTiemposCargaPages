@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AuditarFront.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb653dba8534c4a6936a04cc63dc80c1e891f012")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cac653e7412c1ea9a9906193329a7e125213e22")]
 [assembly: System.Reflection.AssemblyProductAttribute("AuditarFront.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AuditarFront.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

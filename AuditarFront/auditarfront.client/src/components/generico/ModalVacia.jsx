@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../css/ModalVacia.css';
+import '../../css/ModalVacia.css';
 
 /**
  * ModalVacia: Modal reutilizable con animación y callbacks de apertura/cierre.

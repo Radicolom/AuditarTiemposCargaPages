@@ -30,8 +30,25 @@ const Header = ({ modo = 'Inicio', toggleMenu, menuVisible }) => {
                 <div style={{ width: 180 }} /> 
             )}
             <div className="d-flex align-items-center gap-3">
-                <span className="text-white fw-medium">Admin Principal</span>
-                <UserCircle size={32} color="#fff" />
+                <div className="dropdown">
+                    <button className="btn btn-link text-white fw-medium dropdown-toggle d-flex align-items-center p-0" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin Principal <UserCircle size={32} color="#fff" className="ms-2" />
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <button
+                                className="dropdown-item"
+                                onClick={() => {
+                                    localStorage.removeItem("token");
+                                    localStorage.removeItem("usuario");
+                                    window.location.href = "/login";
+                                }}
+                            >
+                                Cerrar sesión
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </header>
     );

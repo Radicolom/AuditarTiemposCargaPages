@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Dominio.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace Dominio.Data;
 
@@ -53,13 +52,25 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<AuditarLog>(entity =>
         {
-            entity.HasKey(e => e.AuditarLogId).HasName("PK__AuditarL__B5AFA16CCD2AFD4F");
+            entity.HasKey(e => e.AuditarLogId).HasName("PK__AuditarL__B5AFA16C15EF4371");
 
             entity.ToTable("AuditarLog", "Pages");
 
-            entity.Property(e => e.FechaCreacionAuditarLog)
+            entity.Property(e => e.ClsValue)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.FcpValue)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.LcpValue)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SpeedIndexValue)
+                .HasMaxLength(50)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.AuditarPagina).WithMany(p => p.AuditarLogs)
                 .HasForeignKey(d => d.AuditarPaginaId)

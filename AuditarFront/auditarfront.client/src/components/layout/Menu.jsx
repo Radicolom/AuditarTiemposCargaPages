@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, LayoutDashboard, Settings } from 'lucide-react';
-import { obtenerMenus } from '../../consultas/menu';
+import { obtenerMenus } from '../../llamadasApi/menu';
 
 
-const Menu = ({modo, toggleMenu}) => {
+const Menu = ({ toggleMenu}) => {
     const [menus, setMenus] = useState([]);
 
     useEffect(() => {       
         const fetchMenus = async () => {
             const data = await obtenerMenus();
-            setMenus(data || []);
+            setMenus(data);
+            sessionStorage.setItem("menus", JSON.stringify(data));
         };
         fetchMenus();
     }, []);

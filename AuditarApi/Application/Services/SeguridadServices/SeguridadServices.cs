@@ -1,7 +1,6 @@
 ﻿using Dominio.Entities;
 using Dominio.ModuloSeguridad.Repositorio;
 using System.Collections.Generic;
-using System.Data;
 
 public class SeguridadServices
 {
@@ -22,7 +21,6 @@ public class SeguridadServices
         _rolOperacionAccionRepository = rolOperacionAccionRepository;
     }
     #endregion
-
 
     #region Roles
     private List<RolVista> MapToRolVista(List<Rol> roles)
@@ -45,48 +43,108 @@ public class SeguridadServices
         };
     }
 
-    public List<RolVista>? RolActivo(bool? Estado = null)
+    public RespuestaApp<RolVista> RolActivo(bool? Estado = null)
     {
-        List<Rol> rol = _rolRepository.GetByRolAsync(Estado);
-        if (rol == null || !rol.Any())
+        var respuesta = new RespuestaApp<RolVista>();
+        try
         {
-            return null;
+            List<Rol> rol = _rolRepository.GetByRolAsync(Estado);
+            respuesta.Vista = MapToRolVista(rol);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-
-        List<RolVista> rolVista = MapToRolVista(rol);
-
-        return rolVista;
-    }
-
-    public async Task<RolVista?> AddRolAsync(RolVista rol)
-    {
-        Rol rolEntity = MapToRol(rol);
-        var result = await _rolRepository.AddRolAsync(rolEntity);
-        if (result == null) return null;
-        return new RolVista
+        catch (Exception ex)
         {
-            Id = result.RolId,
-            Nombre = result.NombreRol,
-            Estado = result.EstadoRol
-        };
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<RolVista?> UpdateRolAsync(RolVista rol)
+    public async Task<RespuestaApp<RolVista>> AddRolAsync(RolVista rol)
     {
-        Rol rolEntity = MapToRol(rol);
-        var result = await _rolRepository.UpdateRolAsync(rolEntity);
-        if (result == null) return null;
-        return new RolVista
+        var respuesta = new RespuestaApp<RolVista>();
+        try
         {
-            Id = result.RolId,
-            Nombre = result.NombreRol,
-            Estado = result.EstadoRol
-        };
+            Rol rolEntity = MapToRol(rol);
+            var result = await _rolRepository.AddRolAsync(rolEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new RolVista
+                {
+                    Id = result.RolId,
+                    Nombre = result.NombreRol,
+                    Estado = result.EstadoRol
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteRolAsync(int rolId)
+    public async Task<RespuestaApp<RolVista>> UpdateRolAsync(RolVista rol)
     {
-        return await _rolRepository.DeleteRolAsync(rolId);
+        var respuesta = new RespuestaApp<RolVista>();
+        try
+        {
+            Rol rolEntity = MapToRol(rol);
+            var result = await _rolRepository.UpdateRolAsync(rolEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new RolVista
+                {
+                    Id = result.RolId,
+                    Nombre = result.NombreRol,
+                    Estado = result.EstadoRol
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
+    }
+
+    public async Task<RespuestaApp<bool>> DeleteRolAsync(int rolId)
+    {
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _rolRepository.DeleteRolAsync(rolId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 
@@ -127,50 +185,122 @@ public class SeguridadServices
             AutenticacionIntentos = usuarioVista.Intentos,
             EstadoUsuario = usuarioVista.Estado,
             RolId = usuarioVista.RolId,
-            PasswordUsuario = usuarioVista.Password
+            PasswordUsuario = usuarioVista.Password ?? string.Empty
         };
     }
 
-    public async Task<List<UsuarioVista>?> GetByUsuarioAsync(bool? estado)
+    public async Task<RespuestaApp<UsuarioVista>> GetByUsuarioAsync(bool? estado)
     {
-        List<Usuario> usuario = await Task.Run(() => _usuarioRepository.GetByUsuarioAsync(estado));
-        if (usuario == null || !usuario.Any())
+        var respuesta = new RespuestaApp<UsuarioVista>();
+        try
         {
-            return null;
+            List<Usuario> usuario = await Task.Run(() => _usuarioRepository.GetByUsuarioAsync(estado));
+            respuesta.Vista = MapToUsuarioVista(usuario);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-
-        List<UsuarioVista> usuarioVistas = MapToUsuarioVista(usuario);
-
-        return usuarioVistas;
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<UsuarioVista?> AddUsuarioAsync(UsuarioVista usuario)
+    public async Task<RespuestaApp<UsuarioVista>> AddUsuarioAsync(UsuarioVista usuario)
     {
-        Usuario usuarioEntity = MapToUsuario(usuario);
-        Usuario? result = await _usuarioRepository.AddUsuarioAsync(usuarioEntity);
-        if (result == null) return null;
-        List<Usuario> usuarioVistas = new List<Usuario> { result };
+        var respuesta = new RespuestaApp<UsuarioVista>();
+        try
+        {
+            Usuario usuarioEntity = MapToUsuario(usuario);
 
-        UsuarioVista? usuarioVista = MapToUsuarioVista(usuarioVistas).FirstOrDefault();
+            usuarioEntity.AutenticacionDobleFactor = false;
+            usuarioEntity.AutenticacionIntentos = 0;
+            usuarioEntity.EmailConfirmed = false;
+            usuarioEntity.TelefonoConfirmadoUsuario = false;
 
-        return usuarioVista;
+            if (string.IsNullOrEmpty(usuarioEntity.NombreUsuario) ||
+                string.IsNullOrEmpty(usuarioEntity.ApellidoUsuario) ||
+                string.IsNullOrEmpty(usuarioEntity.CorreoUsuario) ||
+                string.IsNullOrEmpty(usuarioEntity.DocumentoUsuario) ||
+                string.IsNullOrEmpty(usuarioEntity.RolId.ToString()))
+            {
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = true;
+                respuesta.Mensaje = "Datos obligatorios faltantes.";
+                return respuesta;
+            }
+
+            Usuario? result = await _usuarioRepository.AddUsuarioAsync(usuarioEntity);
+
+            var usuarioVista = MapToUsuarioVista(new List<Usuario> { result }).FirstOrDefault();
+            if (usuarioVista != null)
+            {
+                respuesta.Vista.Add(usuarioVista);
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<UsuarioVista?> UpdateUsuarioAsync(UsuarioVista usuario)
+    public async Task<RespuestaApp<UsuarioVista>> UpdateUsuarioAsync(UsuarioVista usuario)
     {
-        Usuario usuarioEntity = MapToUsuario(usuario);
-        Usuario? result = await _usuarioRepository.UpdateUsuarioAsync(usuarioEntity);
-        if (result == null) return null;
-        List<Usuario> usuarioVistas = new List<Usuario> { result };
-
-        UsuarioVista? usuarioVista = MapToUsuarioVista(usuarioVistas).FirstOrDefault();
-
-        return usuarioVista;
+        var respuesta = new RespuestaApp<UsuarioVista>();
+        try
+        {
+            Usuario usuarioEntity = MapToUsuario(usuario);
+            Usuario? result = await _usuarioRepository.UpdateUsuarioAsync(usuarioEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(MapToUsuarioVista(new List<Usuario> { result }).FirstOrDefault());
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteUsuarioAsync(int usuarioId)
+    public async Task<RespuestaApp<bool>> DeleteUsuarioAsync(int usuarioId)
     {
-        return await _usuarioRepository.DeleteUsuarioAsync(usuarioId);
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _usuarioRepository.DeleteUsuarioAsync(usuarioId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 
@@ -197,32 +327,99 @@ public class SeguridadServices
             AccionId = vista.AccionId ?? 0,
         };
     }
-    public List<RolOperacionAccionVista>? GetByRolOperacionAccion(int? rolId = null, int? operacionId = null, int? accionId = null)
+
+    public RespuestaApp<RolOperacionAccionVista> GetByRolOperacionAccion(int? rolId = null, int? operacionId = null, int? accionId = null)
     {
-        var entities = _rolOperacionAccionRepository.GetByRolOperacionAccionAsync(rolId, operacionId, accionId);
-        if (entities == null || !entities.Any())
+        var respuesta = new RespuestaApp<RolOperacionAccionVista>();
+        try
         {
-            return null;
+            var entities = _rolOperacionAccionRepository.GetByRolOperacionAccionAsync(rolId, operacionId, accionId);
+            respuesta.Vista = entities?.Select(MapToRolOperacionAccionVista).ToList() ?? new List<RolOperacionAccionVista>();
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-        return entities.Select(MapToRolOperacionAccionVista).ToList();
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
-    public async Task<RolOperacionAccionVista?> AddRolOperacionAccionAsync(RolOperacionAccionVista entity)
+
+    public async Task<RespuestaApp<RolOperacionAccionVista>> AddRolOperacionAccionAsync(RolOperacionAccionVista entity)
     {
-        RolOperacionAccion entityToAdd = MapToRolOperacionAccion(entity);
-        var result = await _rolOperacionAccionRepository.AddRolOperacionAccionAsync(entityToAdd);
-        if (result == null) return null;
-        return MapToRolOperacionAccionVista(result);
+        var respuesta = new RespuestaApp<RolOperacionAccionVista>();
+        try
+        {
+            RolOperacionAccion entityToAdd = MapToRolOperacionAccion(entity);
+            var result = await _rolOperacionAccionRepository.AddRolOperacionAccionAsync(entityToAdd);
+            if (result != null)
+            {
+                respuesta.Vista.Add(MapToRolOperacionAccionVista(result));
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
-    public async Task<RolOperacionAccionVista?> UpdateRolOperacionAccionAsync(RolOperacionAccionVista entity)
+
+    public async Task<RespuestaApp<RolOperacionAccionVista>> UpdateRolOperacionAccionAsync(RolOperacionAccionVista entity)
     {
-        RolOperacionAccion entityToUpdate = MapToRolOperacionAccion(entity);
-        var result = await _rolOperacionAccionRepository.UpdateRolOperacionAccionAsync(entityToUpdate);
-        if (result == null) return null;
-        return MapToRolOperacionAccionVista(result);
+        var respuesta = new RespuestaApp<RolOperacionAccionVista>();
+        try
+        {
+            RolOperacionAccion entityToUpdate = MapToRolOperacionAccion(entity);
+            var result = await _rolOperacionAccionRepository.UpdateRolOperacionAccionAsync(entityToUpdate);
+            if (result != null)
+            {
+                respuesta.Vista.Add(MapToRolOperacionAccionVista(result));
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
-    public async Task<bool> DeleteRolOperacionAccionAsync(int id)
+
+    public async Task<RespuestaApp<bool>> DeleteRolOperacionAccionAsync(int id)
     {
-        return await _rolOperacionAccionRepository.DeleteRolOperacionAccionAsync(id);
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _rolOperacionAccionRepository.DeleteRolOperacionAccionAsync(id);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 }

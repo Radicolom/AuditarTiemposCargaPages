@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
-import UserForm from './UserForm'; 
-import ModalVacia from '../generico/ModalVacia';
-import { obtenerUsuarios } from '../consultas/users';
+import UserForm from '../components/Forms/UserForm'; 
+import ModalVacia from '../components/generico/ModalVacia';
+import { obtenerUsuarios } from '../llamadasApi/users';
+import Title from '../components/layout/Title';
 
 const GestionUsuarios = () => {
     const [users, setUsers] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -16,51 +18,52 @@ const GestionUsuarios = () => {
         fetchUsers();
     }, []);
 
-
-    const roles = { 1: 'Admin', 2: 'Supervisor', 3: 'Operador' };
-
-    const handleToggleForm = () => {
-        setIsFormVisible(!isFormVisible);
+    const handleToggleForm = (tipo, user = null) => {
+        switch (tipo) {
+            case "editar":
+                setIsFormVisible(!isFormVisible);  
+                setSelectedUser(user);
+                break;
+            case "crear":
+                setSelectedUser(null);
+                break;
+            default:
+                setIsFormVisible(!isFormVisible);  
+                setSelectedUser(null);
+                break;
+        }
     };
 
     const handleSaveUser = (newUser) => {
-        setUsers([...users, { ...newUser, id: Date.now(), rolNombre: roles[newUser.rolId] }]);
+        let userExists = false;
+        if (newUser.id) {
+            userExists = users.some(u => u.id === newUser.id);
+        }
+        if (userExists) {
+            setUsers(users.map(u => (u.id === newUser.id ? newUser : u)));
+        } else {
+            setUsers([...users, { ...newUser, id: Date.now() }]);
+        }
         setIsFormVisible(false);
-    };
+    };  
     
 
     return (
         <div className="card p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
             {/* Cabecera de la pagina */}
-            <div className="rounded-4 mb-4 p-4 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3"
-                style={{
-                    background: 'linear-gradient(90deg, #2563eb 0%, #1e40af 100%)',
-                    boxShadow: '0 4px 24px 0 rgba(30,64,175,0.10)',
-                }}>
-                <div className="d-flex flex-column flex-md-row align-items-center gap-3">
-                    <div className="d-flex align-items-center justify-content-center rounded-circle bg-white bg-opacity-25" style={{width: 56, height: 56}}>
-                        <Plus size={32} color="#fff" />
-                    </div>
-                    <div>
-                        <h1 className="mb-1 fw-bold text-white" style={{fontSize: '2.2rem', letterSpacing: '-1px'}}>
-                            Gestión de Usuarios
-                        </h1>
-                        <p className="mb-0 text-white-50" style={{fontWeight: 400}}>
-                            Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario.
-                        </p>
-                    </div>
-                </div>
-                <button
-                    type="button"
-                    className="btn btn-light d-flex align-items-center px-4 py-2 fw-bold shadow-sm"
-                    style={{fontSize: '1.1rem'}}
-                    onClick={handleToggleForm}
-                >
-                    <Plus size={20} className="me-2" />
-                    Nuevo Usuario
-                </button>
-            </div>
-
+            <Title 
+                icon={<Plus size={32} color="#fff" />}
+                title="Gestión de Usuarios"
+                subtitle="Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario."
+                actions={[
+                    {
+                    onClick: handleToggleForm,
+                    text: "Nuevo Usuario",
+                    icon: <Plus size={20} className="me-2" />
+                    },
+                    // Puedes agregar más botones aquí
+                ]}
+            />
             <div className="bg-white shadow-xl rounded-4 overflow-x-auto border border-gray-100">
                 <table className="table table-hover align-middle table-bordered mb-0 rounded-4 overflow-hidden">
                     <thead className="tabla-app-thead">
@@ -108,7 +111,7 @@ const GestionUsuarios = () => {
                     <UserForm
                         onSave={handleSaveUser}
                         onCancel={() => setIsFormVisible(false)}
-                        modo="crear"
+                        initialData={selectedUser}
                     />
                 </ModalVacia>
             )}
@@ -118,4 +121,3 @@ const GestionUsuarios = () => {
 };
 
 export default GestionUsuarios;
-

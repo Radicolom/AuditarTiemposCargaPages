@@ -16,6 +16,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "AuthController",
+    "Method": "GetProtectedData",
+    "RelativePath": "api/Auth/protegido",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ConfiguracionController",
     "Method": "AccionEditar",
     "RelativePath": "api/Configuracion/AccionEditar",
@@ -272,13 +282,147 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "SeguridadController",
-    "Method": "GetProtectedData",
-    "RelativePath": "api/Seguridad/protegido",
-    "HttpMethod": "GET",
+    "ContainingType": "PagesController",
+    "Method": "AuditarLogEditar",
+    "RelativePath": "api/Pages/AuditarLogEditar",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "log",
+        "Type": "AuditarLogVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarLogEliminar",
+    "RelativePath": "api/Pages/AuditarLogEliminar/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarLogInsertar",
+    "RelativePath": "api/Pages/AuditarLogInsertar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "log",
+        "Type": "AuditarLogVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarLogObtener",
+    "RelativePath": "api/Pages/AuditarLogObtener",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuditarLogVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarPaginaEditar",
+    "RelativePath": "api/Pages/AuditarPaginaEditar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "AuditarPaginaVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarPaginaEliminar",
+    "RelativePath": "api/Pages/AuditarPaginaEliminar/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarPaginaInsertar",
+    "RelativePath": "api/Pages/AuditarPaginaInsertar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "AuditarPaginaVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PagesController",
+    "Method": "AuditarPaginaObtener",
+    "RelativePath": "api/Pages/AuditarPaginaObtener",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuditarPaginaVista",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuditarApi.Controllers.PageSpeedController",
+    "Method": "Analyze",
+    "RelativePath": "api/PageSpeed/analyze",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "AuditarApi.Models.Dtos.AnalyzeUrlRequestDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
