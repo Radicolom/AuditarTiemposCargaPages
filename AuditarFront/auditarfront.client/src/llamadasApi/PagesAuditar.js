@@ -17,7 +17,7 @@ export async function modificarPaguesAuditar(data) {
   return [];
 }
 
-export async function obtenerPaguesAuditars(data = {}) {
+export async function obtenerPaguesAuditar(data = {}) {
   const response = await apiPost("Pages/AuditarPaginaObtener", data);
   if (esOperacionExitosa(response)) {
       return response.vista;

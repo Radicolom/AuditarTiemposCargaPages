@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
-import { obtenerPaguesAuditars } from '../llamadasApi/PagesAuditar';
+import { obtenerPaguesAuditar } from '../llamadasApi/PagesAuditar';
 import { buscarEstado,formatearFecha } from '../utils/genericos';  
 import { modificarPaguesAuditar } from '../llamadasApi/PagesAuditar';
 import ModalVacia from '../components/generico/ModalVacia';
@@ -70,7 +70,7 @@ const GestionPaguesAuditar = () => {
 
     useEffect(() => {
         const fetchPages = async () => {
-            const data = await obtenerPaguesAuditars();
+            const data = await obtenerPaguesAuditar();
             setPages(data);
         };
         fetchPages();
