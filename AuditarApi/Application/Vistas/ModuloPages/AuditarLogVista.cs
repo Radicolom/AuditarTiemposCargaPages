@@ -14,4 +14,9 @@ public class AuditarLogVista
     public string? LcpValue { get; set; }
     public string? ClsValue { get; set; }
     public string? SpeedIndexValue { get; set; }
+    public string? Nombre { get; set; }
+    public string? Url { get; set; }
+    public DateTime? FechaCreacionAuditarPagina { get; set; }
+    public string? UsuarioCreacion { get; set; }
+    public string? UsuarioEdicion { get; set; }
 }

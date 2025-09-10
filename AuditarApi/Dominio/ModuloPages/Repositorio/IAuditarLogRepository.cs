@@ -9,7 +9,7 @@ namespace Dominio.ModuloPages.Repositorio
 {
     public interface IAuditarLogRepository
     {
-        List<AuditarLog> GetByAuditarLogAsync(int? auditarPaginaId = null);
+        List<AuditarLog> GetByAuditarLogAsync(AuditarLog auditarLogVista);
         Task<AuditarLog> AddAuditarLogAsync(AuditarLog AuditarLog);
         Task<AuditarLog> UpdateAuditarLogAsync(AuditarLog AuditarLog);
         Task<bool> DeleteAuditarLogAsync(int AuditarLogId);

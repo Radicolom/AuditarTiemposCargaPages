@@ -80,13 +80,21 @@ namespace AuditarApi.Services
             return respuesta;
         }
 
-        private Metric ExtractMetric(JsonElement lighthouseResult, string auditId)
+        private Metric ExtractMetric(JsonElement audits, string auditId)
         {
-            var audit = lighthouseResult.GetProperty("audits").GetProperty(auditId);
+            if (audits.TryGetProperty(auditId, out var audit))
+            {
+                return new Metric
+                {
+                    DisplayValue = audit.TryGetProperty("displayValue", out var displayValue) ? displayValue.GetString() : null,
+                    Score = audit.TryGetProperty("score", out var score) ? score.GetDouble() * 100 : 0
+                };
+            }
+            // Retornar un objeto por defecto o lanzar una excepción controlada
             return new Metric
             {
-                DisplayValue = audit.GetProperty("displayValue").GetString(),
-                Score = audit.GetProperty("score").GetDouble() * 100
+                DisplayValue = "No disponible",
+                Score = 0
             };
         }
     }

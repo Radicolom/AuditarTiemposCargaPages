@@ -72,7 +72,7 @@ public class PagesController : ControllerBase
     [HttpPost("AuditarLogObtener")]
     public IActionResult AuditarLogObtener([FromBody] AuditarLogVista request)
     {
-        var respuesta = _pagesServices.AuditarLogObtener(request.Id);
+        var respuesta = _pagesServices.AuditarLogObtener(request);
         return Ok(respuesta);
     }
 

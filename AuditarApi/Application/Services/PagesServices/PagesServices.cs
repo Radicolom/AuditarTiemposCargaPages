@@ -178,8 +178,13 @@ public class PagesServices
             FcpValue = log.FcpValue,
             LcpValue = log.LcpValue,
             ClsValue = log.ClsValue,
-            SpeedIndexValue = log.SpeedIndexValue
-        }).ToList();
+            SpeedIndexValue = log.SpeedIndexValue,
+			Nombre = log.AuditarPagina?.NombreAuditarPagina,
+            Url = log.AuditarPagina?.UrlAuditarPagina,
+			FechaCreacionAuditarPagina = log.AuditarPagina?.FechaCreacionAuditarPagina,
+			UsuarioCreacion = log.AuditarPagina?.Usuario?.NombreUsuario + ' ' + log.AuditarPagina?.Usuario?.ApellidoUsuario
+
+		}).ToList();
     }
 
     private AuditarLog MapToAuditarLog(AuditarLogVista vista)
@@ -198,15 +203,32 @@ public class PagesServices
             LcpValue = vista.LcpValue,
             ClsValue = vista.ClsValue,
             SpeedIndexValue = vista.SpeedIndexValue
-        };
+		};
     }
 
-    public RespuestaApp<AuditarLogVista> AuditarLogObtener(int? id = null)
+    public RespuestaApp<AuditarLogVista> AuditarLogObtener(AuditarLogVista auditarLogVista)
     {
         var respuesta = new RespuestaApp<AuditarLogVista>();
         try
         {
-            var logs = _auditarLogRepository.GetByAuditarLogAsync(id);
+            var dataFilter = new AuditarLog
+            {
+                AuditarLogId = auditarLogVista.Id,
+                AuditarPaginaId = auditarLogVista.AuditarPaginaId,
+                FechaCreacion = auditarLogVista.FechaCreacion,
+                EstadoAuditarPagina = auditarLogVista.EstadoAuditarPagina,
+                PerformanceScore = auditarLogVista.PerformanceScore,
+                TimeToFirstByteMs = auditarLogVista.TimeToFirstByteMs,
+                DomProcessingTimeMs = auditarLogVista.DomProcessingTimeMs,
+                PageLoadTimeMs = auditarLogVista.PageLoadTimeMs,
+                FcpValue = auditarLogVista.FcpValue,
+                LcpValue = auditarLogVista.LcpValue,
+                ClsValue = auditarLogVista.ClsValue,
+                SpeedIndexValue = auditarLogVista.SpeedIndexValue
+            };
+
+
+			var logs = _auditarLogRepository.GetByAuditarLogAsync(dataFilter);
             respuesta.Vista = MapToAuditarLogVista(logs);
             respuesta.OperacionExitosa = true;
             respuesta.ValidacionesNegocio = false;

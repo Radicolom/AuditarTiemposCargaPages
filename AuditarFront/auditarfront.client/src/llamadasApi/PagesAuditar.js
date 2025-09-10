@@ -32,3 +32,11 @@ export async function analyzePaguesAuditar(data) {
     }
     return [];
 }
+
+export async function obtenerAuditarLog(data = {}) {
+    const response = await apiPost("Pages/AuditarLogObtener", data);
+    if (esOperacionExitosa(response)) {
+        return response.vista;
+    }
+    return [];
+}

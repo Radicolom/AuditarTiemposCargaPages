@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AuditarApi.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -109,6 +110,11 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+#endregion
+
+#region PageSpeed
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IPageSpeedService, PageSpeedService>();
 #endregion
 
 var app = builder.Build();

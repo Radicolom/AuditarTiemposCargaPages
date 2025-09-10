@@ -6,6 +6,7 @@ import LoginForm from './components/auth/LoginForm';
 import Layout from './components/layout/Layout';
 import GestionUsuarios from './pages/GestionUsuarios';
 import GestionPaguesAuditar from './pages/GestionPaguesAuditar';
+import AuditarPague from './pages/AuditarPague';
 import Inicio from './pages/Inicio';
 import Fund from './components/layout/fund';
 
@@ -31,6 +32,7 @@ function App() {
         1: Inicio,
         2: GestionPaguesAuditar,
         3: GestionUsuarios,
+        4: AuditarPague
     };
 
     return (
