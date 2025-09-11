@@ -3,15 +3,28 @@ import { Plus, Edit, Trash2 } from 'lucide-react';
 import { obtenerPaguesAuditar } from '../llamadasApi/PagesAuditar';
 import { buscarEstado,formatearFecha } from '../utils/genericos';  
 import { modificarPaguesAuditar } from '../llamadasApi/PagesAuditar';
+import TablaGenerica from '../components/generico/TablaGenerica';
 import ModalVacia from '../components/generico/ModalVacia';
 import Title from '../components/layout/Title';
 import PageAuditarForm from '../components/Forms/PageAuditarForm';
 import Swal from 'sweetalert2';
 
 const GestionPaguesAuditar = () => {
-    // Estado para controlar la visibilidad del formulario
+    
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [selectedPage, setSelectedPage] = useState(null);
+    const [pages, setPages] = useState([]);
+
+
+    const columnasGrilla = 
+    [
+        { key: 'nombre', header: 'Nombre pagina' },
+        { key: 'url', header: 'Url' },
+        { key: 'estado', header: 'Estado', render: (row) => buscarEstado(row.estado) },
+        { key: 'fechaCreacion', header: 'Fecha de creación', render: (row) => formatearFecha(row.fechaCreacion) },
+        // { key: 'fechaModificacion', header: 'Fecha de modificación', render: (row) => formatearFecha(row.fechaModificacion) },
+        { key: 'usuarioNombre', header: 'Usuario' },
+    ]
 
     // Alternar la visibilidad del formulario y el tipo de acción
     const handleToggleForm = (tipo, page = null) => {
@@ -65,17 +78,6 @@ const GestionPaguesAuditar = () => {
         }
     };
 
-    // Estado para almacenar las páginas a auditar
-    const [pages, setPages] = useState([]);
-
-    useEffect(() => {
-        const fetchPages = async () => {
-            const data = await obtenerPaguesAuditar();
-            setPages(data);
-        };
-        fetchPages();
-    }, []);
-
     const handleSavePage = (newPage) => {
         let NuevaPagina;
         if (newPage.id) {
@@ -88,7 +90,15 @@ const GestionPaguesAuditar = () => {
         }
         setIsFormVisible(false);
     }
-    
+
+    useEffect(() => {
+        const fetchPages = async () => {
+            const data = await obtenerPaguesAuditar();
+            setPages(data);
+        };
+        fetchPages();
+    }, []);
+
     return (
         <div className="card p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
             {/* Cabecera de la pagina */}
@@ -105,42 +115,24 @@ const GestionPaguesAuditar = () => {
                 ]}
             />
             <div className="bg-white shadow-xl rounded-4 overflow-x-auto border border-gray-100">
-                <table className="table table-hover align-middle table-bordered mb-0 rounded-4 overflow-hidden">
-                    <thead className="tabla-app-thead">
-                        <tr>
-                            <th>Nombre pagina</th>
-                            <th>Url</th>
-                            <th>Estado</th>
-                            <th>Fecha de creación</th>
-                            {/* <th>Fecha de modificación</th> */}
-                            <th>Usuario</th>
-                            <th className="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pages.map(page => (
-                            <tr key={page.id}>
-                                <td>{page.nombre}</td>
-                                <td>{page.url}</td>
-                                <td>{buscarEstado(page.estado)}</td>
-                                <td>{formatearFecha(page.fechaCreacion)}</td>
-                                {/* <td>{formatearFecha(page.fechaModificacion)}</td> */}
-                                <td>{page.usuarioNombre}</td>
-                                <td className="text-center">
-                                    <button
-                                        className="btn btn-sm btn-outline-primary me-2"
-                                        onClick={() => handleToggleForm("editar", page)}
-                                    >
-                                        <Edit size={18} />
-                                    </button>
-                                    <button className="btn btn-sm btn-outline-danger" onClick={
-                                        () => handleToggleForm("eliminar", page)
-                                    }><Trash2 size={18} /></button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <TablaGenerica
+                    columns={columnasGrilla}
+                    data={pages}
+                    acciones={(page) => (
+                        <>
+                            <button
+                                className="btn btn-sm btn-outline-primary me-2"
+                                onClick={() => handleToggleForm("editar", page)}
+                            >   
+                                <Edit size={18} />
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger" onClick={
+                                () => handleToggleForm("eliminar", page)
+                            }><Trash2 size={18} /></button>
+                        </>
+                    )}
+                    pageSize={10}
+                />
             </div>
 
             {isFormVisible && (

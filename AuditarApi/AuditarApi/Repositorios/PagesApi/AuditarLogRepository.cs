@@ -18,7 +18,12 @@ public class AuditarLogRepository : IAuditarLogRepository
 			.Include(x => x.AuditarPagina)
 			.AsQueryable();
 
-		if (auditarLog.AuditarLogId > 0)
+        // Filtros dinámicos basados en las propiedades no nulas del objeto AuditarLog
+		if (auditarLog.EstadoAuditarPagina)
+			query = query.Where(x => x.EstadoAuditarPagina == auditarLog.EstadoAuditarPagina && x.PageLoadTimeMs != null && x.PerformanceScore != null && x.TimeToFirstByteMs != null &&
+									x.DomProcessingTimeMs != null && x.FcpValue != null && x.LcpValue != null && x.ClsValue != null && x.SpeedIndexValue != null );
+
+        if (auditarLog.AuditarLogId > 0)
 			query = query.Where(x => x.AuditarLogId == auditarLog.AuditarLogId);
 
 		if (auditarLog.AuditarPaginaId > 0)

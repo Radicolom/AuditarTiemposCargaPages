@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
+import { obtenerUsuarios } from '../llamadasApi/users';
 import UserForm from '../components/Forms/UserForm'; 
 import ModalVacia from '../components/generico/ModalVacia';
-import { obtenerUsuarios } from '../llamadasApi/users';
 import Title from '../components/layout/Title';
+import TablaGenerica from '../components/generico/TablaGenerica';
 
 const GestionUsuarios = () => {
     const [users, setUsers] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const data = await obtenerUsuarios();
-            setUsers(data || []);
-        };
-        fetchUsers();
-    }, []);
+    const columnasGrilla =
+    [
+        { key: 'nombreCompleto', header: 'Nombre Completo', render: (user) => `${user.nombre} ${user.apellido}` },
+        { key: 'documento', header: 'Documento' },
+        { key: 'correo', header: 'Correo' },
+        { key: 'rolNombre', header: 'Rol', style: { textAlign: 'center' }, render: (user) => (
+            <span className={`badge ${user.rolId === 1 ? 'bg-danger' : 'bg-success'}`}>
+                {user.rolNombre}
+            </span>
+        ) },
+    ]
 
     const handleToggleForm = (tipo, user = null) => {
         switch (tipo) {
@@ -47,6 +52,13 @@ const GestionUsuarios = () => {
         setIsFormVisible(false);
     };  
     
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const data = await obtenerUsuarios();
+            setUsers(data || []);
+        };
+        fetchUsers();
+    }, []);
 
     return (
         <div className="card p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
@@ -65,35 +77,21 @@ const GestionUsuarios = () => {
                 ]}
             />
             <div className="bg-white shadow-xl rounded-4 overflow-x-auto border border-gray-100">
-                <table className="table table-hover align-middle table-bordered mb-0 rounded-4 overflow-hidden">
-                    <thead className="tabla-app-thead">
-                        <tr>
-                            <th>Nombre Completo</th>
-                            <th>Documento</th>
-                            <th>Correo</th>
-                            <th className="text-center">Rol</th>
-                            <th className="text-center">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.nombre} {user.apellido}</td>
-                                <td>{user.documento}</td>
-                                <td>{user.correo}</td>
-                                <td className="text-center">
-                                    <span className={`badge ${user.rolId === 1 ? 'bg-danger' : 'bg-success'}`}>
-                                        {user.rolNombre}
-                                    </span>
-                                </td>
-                                <td className="text-center">
-                                    <button className="btn btn-sm btn-outline-primary me-2"><Edit size={18} /></button>
-                                    <button className="btn btn-sm btn-outline-danger"><Trash2 size={18} /></button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <TablaGenerica
+                    columns={columnasGrilla}
+                    data={users}
+                    acciones={(user) => (
+                        <>
+                            <button className="btn btn-sm btn-outline-primary me-2" onClick={() => handleToggleForm("editar", user)}>
+                                <Edit size={18} />
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger">
+                                <Trash2 size={18} />
+                            </button>
+                        </>
+                    )}
+                    pageSize={10}
+                />
             </div>
 
             {isFormVisible && (

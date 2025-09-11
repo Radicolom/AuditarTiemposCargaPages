@@ -23,6 +23,7 @@ function App() {
 
 
     async function fetchMenus() {
+        if (menus.length > 0) return;
         const data = await obtenerMenus();
         setMenus(data || []);
     }

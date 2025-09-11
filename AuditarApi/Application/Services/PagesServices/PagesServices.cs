@@ -77,18 +77,23 @@ public class PagesServices
             var result = await _auditarPaginaRepository.AddAuditarPaginaAsync(entity);
             if (result != null)
             {
-                respuesta.Vista.Add(new AuditarPaginaVista
+                AuditarLog auditarLogVista = new AuditarLog
                 {
-                    Id = result.AuditarPaginaId,
-                    Url = result.UrlAuditarPagina,
-                    Nombre = result.NombreAuditarPagina,
-                    Estado = result.EstadoAuditarPagina,
-                    FechaCreacion = result.FechaCreacionAuditarPagina,
-                    UsuarioId = result.UsuarioId,
-                    UsuarioNombre = result.Usuario?.NombreUsuario
-                });
-                respuesta.OperacionExitosa = true;
-                respuesta.ValidacionesNegocio = false;
+                    AuditarPaginaId = result.AuditarPaginaId,
+                    EstadoAuditarPagina = result.EstadoAuditarPagina ?? false 
+                };
+
+                var logResult = await _auditarLogRepository.AddAuditarLogAsync(auditarLogVista);
+
+                if (logResult != null) {
+                    respuesta.Vista.Add(MapToAuditarPaginaVista(new List<AuditarPagina> { result })[0]);
+                    respuesta.OperacionExitosa = true;
+                    respuesta.ValidacionesNegocio = false;
+                } else {
+                    respuesta.OperacionExitosa = false;
+                    respuesta.ValidacionesNegocio = false;
+                    respuesta.Mensaje = "Error al crear el log de auditoría.";
+                }
             }
             else
             {

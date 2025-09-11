@@ -1,45 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2 } from 'lucide-react';
-import { obtenerPaguesAuditar, analyzePaguesAuditar } from '../llamadasApi/PagesAuditar'; 
-import { Selectores } from '../components/generico/Selectores';
-import ModalVacia from '../components/generico/ModalVacia';
-import Title from '../components/layout/Title';
-import PageAuditarForm from '../components/Forms/PageAuditarForm';
+import { obtenerPaguesAuditar, analyzePaguesAuditar } from '../../llamadasApi/PagesAuditar'; 
+import { Selectores } from '../generico/Selectores';
 import Swal from 'sweetalert2';
 
 
-const AuditarForm = ({ onSubmit, onCancel, formData, handleChange, pagesAuditar, isLoading }) => {
-const [pagesAuditar, setPagesAuditar] = useState([]);
+const AuditarForm = ({ onSubmit, onCancel, pagesAuditar }) => {
     const [isLoading, setIsLoading] = useState(false);
-
+    
     const [formData, setFormData] = React.useState({
         url: null,
         id: null,
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
-
     useEffect(() => {
         const fetchData = async () => {
-            const data = await obtenerPaguesAuditar();
-            setPagesAuditar(data);
+            setIsLoading(true);
+            const data = await obtenerPaguesAuditar(
+                {
+                    estado: true
+                }
+            );
+            setIsLoading(false);
         };
         fetchData();
     }, []);
+    
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (!isNaN(parseInt(value, 10))) {
+            setFormData(prev => ({
+                ...prev,
+                id: parseInt(value, 10),
+            }));
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'El valor seleccionado no es válido.',
+            });
+        }
+    };
 
     const AuditarPagina = async (e) => {
-        e.preventDefault();
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
         if (formData.id) { 
             setIsLoading(true);
             const result = await analyzePaguesAuditar(formData);
-            if (result.success) {
+            if (result.length > 0) {
                 Swal.fire('Éxito', 'Página auditada correctamente', 'success');
-                onCancel();
-                const data = await obtenerPaguesAuditar();
-                setPages(data);
+                onSubmit();
             } else {
                 Swal.fire('Error', 'Hubo un problema al auditar la página', 'error');
             }
@@ -49,7 +61,7 @@ const [pagesAuditar, setPagesAuditar] = useState([]);
     
     // Si solo hay un registro, seleccionarlo automáticamente
     useEffect(() => {
-        if (pagesAuditar.length === 1) {
+        if (pagesAuditar.length > 0 && formData.id === null) {
             setFormData({
                 ...formData,
                 id: pagesAuditar[0].id,
@@ -64,7 +76,7 @@ const [pagesAuditar, setPagesAuditar] = useState([]);
             <h2 className="h5 mb-4 fw-bold text-primary">Selecciona la página a auditar</h2>
             <div className="mb-3">
                 <Selectores
-                    fetchOptions={async () => pagesAuditar.map(page => ({ value: page.id, label: page.url }))}
+                    fetchOptions={async () => pagesAuditar.map(page => ({ value: page.id, label: page.nombre }))}
                     valueKey="value"
                     labelKey="label"
                     name="id"
@@ -85,3 +97,4 @@ const [pagesAuditar, setPagesAuditar] = useState([]);
 
 };
 
+export default AuditarForm;
