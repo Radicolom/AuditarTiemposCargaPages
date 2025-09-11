@@ -1,92 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2 } from 'lucide-react';
-import UserForm from './UserForm'; 
-import ModalVacia from '../generico/ModalVacia';
+import { obtenerUsuarios } from '../llamadasApi/users';
+import UserForm from '../components/Forms/UserForm'; 
+import ModalVacia from '../components/generico/ModalVacia';
+import Title from '../components/layout/Title';
+import TablaGenerica from '../components/generico/TablaGenerica';
 
 const GestionUsuarios = () => {
-    // --- ESTADOS ---
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            nombre: 'Admin',
-            apellido: 'Principal',
-            documento: '123456789',
-            correo: 'admin@inspectia.com',
-            rolId: 1,
-            rolNombre: 'Admin'
-        }
-    ]);
+    const [users, setUsers] = useState([]);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
-    // TODO: Cargar usuarios desde la API con useEffect
+    const columnasGrilla =
+    [
+        { key: 'nombreCompleto', header: 'Nombre Completo', render: (user) => `${user.nombre} ${user.apellido}` },
+        { key: 'documento', header: 'Documento' },
+        { key: 'correo', header: 'Correo' },
+        { key: 'rolNombre', header: 'Rol', style: { textAlign: 'center' }, render: (user) => (
+            <span className={`badge ${user.rolId === 1 ? 'bg-danger' : 'bg-success'}`}>
+                {user.rolNombre}
+            </span>
+        ) },
+    ]
 
-    const roles = { 1: 'Admin', 2: 'Supervisor', 3: 'Operador' };
-
-    const handleToggleForm = () => {
-        setIsFormVisible(!isFormVisible);
+    const handleToggleForm = (tipo, user = null) => {
+        switch (tipo) {
+            case "editar":
+                setIsFormVisible(!isFormVisible);  
+                setSelectedUser(user);
+                break;
+            case "crear":
+                setSelectedUser(null);
+                break;
+            default:
+                setIsFormVisible(!isFormVisible);  
+                setSelectedUser(null);
+                break;
+        }
     };
 
     const handleSaveUser = (newUser) => {
-        setUsers([...users, { ...newUser, id: Date.now(), rolNombre: roles[newUser.rolId] }]);
+        let userExists = false;
+        if (newUser.id) {
+            userExists = users.some(u => u.id === newUser.id);
+        }
+        if (userExists) {
+            setUsers(users.map(u => (u.id === newUser.id ? newUser : u)));
+        } else {
+            setUsers([...users, { ...newUser, id: Date.now() }]);
+        }
         setIsFormVisible(false);
-    };
+    };  
     
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const data = await obtenerUsuarios();
+            setUsers(data || []);
+        };
+        fetchUsers();
+    }, []);
 
     return (
-        <div className="card container p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
+        <div className="card p-4 border-0 flex-grow-1" style={{ background: '#f9f9f9' }}>
             {/* Cabecera de la pagina */}
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-                <div>
-                    <h1 className="text-3xl font-extrabold text-gray-800 tracking-tight mb-1 flex items-center gap-2">
-                        <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-lg font-semibold">Gestión de Usuarios</span>
-                    </h1>
-                    <p className="text-gray-500 text-sm mt-1">
-                        Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario.
-                    </p>
-                </div>
-                {/* Botón Bootstrap */}
-                <button
-                    type="button"
-                    className="btn btn-primary d-flex align-items-center"
-                    onClick={handleToggleForm}
-                >
-                    <Plus size={20} className="me-2" />
-                    Nuevo Usuario
-                </button>
-            </div>
-
-            <div className="bg-white shadow-xl rounded-2xl overflow-x-auto border border-gray-100">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gradient-to-r from-gray-100 to-gray-200">
-                        <tr>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Nombre Completo</th>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Documento</th>
-                            <th className="py-4 px-6 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Correo</th>
-                            <th className="py-4 px-6 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Rol</th>
-                            <th className="py-4 px-6 text-center text-xs font-bold text-gray-600 uppercase tracking-wider">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                         {users.map(user => (
-                            <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-100">
-                                <td className="py-3 px-6 text-left whitespace-nowrap">{user.nombre} {user.apellido}</td>
-                                <td className="py-3 px-6 text-left">{user.documento}</td>
-                                <td className="py-3 px-6 text-left">{user.correo}</td>
-                                <td className="py-3 px-6 text-center">
-                                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${user.rolId === 1 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
-                                        {user.rolNombre}
-                                    </span>
-                                </td>
-                                <td className="py-3 px-6 text-center">
-                                    <div className="flex item-center justify-center space-x-4">
-                                        <button className="w-6 h-6 text-blue-600 hover:text-blue-900"><Edit size={18} /></button>
-                                        <button className="w-6 h-6 text-red-600 hover:text-red-900"><Trash2 size={18} /></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <Title 
+                icon={<Plus size={32} color="#fff" />}
+                title="Gestión de Usuarios"
+                subtitle="Administra los usuarios del sistema, crea, edita o elimina cuentas según sea necesario."
+                actions={[
+                    {
+                    onClick: handleToggleForm,
+                    text: "Nuevo Usuario",
+                    icon: <Plus size={20} className="me-2" />
+                    },
+                    // Puedes agregar más botones aquí
+                ]}
+            />
+            <div className="bg-white shadow-xl rounded-4 overflow-x-auto border border-gray-100">
+                <TablaGenerica
+                    columns={columnasGrilla}
+                    data={users}
+                    acciones={(user) => (
+                        <>
+                            <button className="btn btn-sm btn-outline-primary me-2" onClick={() => handleToggleForm("editar", user)}>
+                                <Edit size={18} />
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger">
+                                <Trash2 size={18} />
+                            </button>
+                        </>
+                    )}
+                    pageSize={10}
+                />
             </div>
 
             {isFormVisible && (
@@ -104,7 +109,7 @@ const GestionUsuarios = () => {
                     <UserForm
                         onSave={handleSaveUser}
                         onCancel={() => setIsFormVisible(false)}
-                        modo="crear"
+                        initialData={selectedUser}
                     />
                 </ModalVacia>
             )}
@@ -114,4 +119,3 @@ const GestionUsuarios = () => {
 };
 
 export default GestionUsuarios;
-

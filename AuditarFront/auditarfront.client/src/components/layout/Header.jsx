@@ -1,52 +1,53 @@
 import React from 'react';
-import { UserCircle, Bell } from 'lucide-react';
+import { UserCircle } from 'lucide-react';
 
 const Header = ({ modo = 'Inicio', toggleMenu, menuVisible }) => {
+    // Si menuVisible es true, solo redondea la derecha, si no, redondea todo
+    const borderRadiusClass = !menuVisible
+        ? 'rounded-end-4'
+        : 'rounded-4';
 
     return (
-        <header className="flex items-center justify-between px-6 py-4 bg-white border-b-2 border-gray-200 shadow-sm header-color">
-            <div
-                className="row"
-                style={{
-                    display: "flex",
-                    alignItems: "center", // Centra verticalmente
-                    width: "100%",
-                    gap: 0,
-                }}
-            >
-                <div className="col-md-3"
-                    style={{
-                        display: menuVisible ? "block" : "none",
-                    }}
-                >
-                    {/* Logo o Título de la App y botón de ocultar */}
-                    <div className="flex items-center justify-between h-20 border-b border-gray-700 px-4">
-                        <button onClick={toggleMenu} className="btn btn-sm" title="Ocultar menú">
-                            <h3 className="text-2xl font-bold">
-                                <span className="material-icons">menu</span>
-                                Inspectia
-                            </h3>
-                        </button>
-                    </div>
+        <header
+            className={`${borderRadiusClass} mb-4 px-4 py-3 d-flex align-items-center justify-content-between shadow-sm`}
+            style={{
+                background: 'linear-gradient(90deg, #2563eb 0%, #1e40af 100%)',
+                boxShadow: '0 4px 24px 0 rgba(30,64,175,0.10)',
+                minHeight: 72,
+                marginBottom: "0px !important"
+            }}
+        >
+            {menuVisible ? (
+                <div className="d-flex align-items-center gap-3">
+                    <button onClick={toggleMenu} className="btn btn-light btn-sm d-flex align-items-center px-3 py-2 fw-bold shadow-sm me-3" title="Mostrar/Ocultar menú">
+                        <span className="material-icons" style={{fontSize: 24, color: '#2563eb'}}>menu</span>
+                    </button>
+                    <h3 className="mb-0 fw-bold text-white" style={{fontSize: '1.7rem', letterSpacing: '-1px'}}>
+                        Inspectia
+                    </h3>
                 </div>
-                <div className="col-md-7 d-flex">
-                    {/* Modo centered */}
-                    {/* <div className="flex-1 flex justify-center items-center h-20 border-b border-gray-700 px-4">
-                        <h3 className="text-3xl font-extrabold text-gray-800 tracking-tight mb-1 flex items-center gap-2">
-                            <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-lg font-semibold">{modo}</span>
-                        </h3>
-                    </div> */}
-                </div>
-                <div className="col-md-2 d-flex justify-content-end align-items-center"
-                    style={{
-                        color: "white",
-                    }}
-                >
-                    {/* User info */}
-                    <div className="flex items-center">
-                        <span className="text-gray-700 font-medium mr-2">Admin Principal</span>
-                        <UserCircle size={28} className="text-gray-600" />
-                    </div>
+            ) : (
+                <div style={{ width: 180 }} /> 
+            )}
+            <div className="d-flex align-items-center gap-3">
+                <div className="dropdown">
+                    <button className="btn btn-link text-white fw-medium dropdown-toggle d-flex align-items-center p-0" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin Principal <UserCircle size={32} color="#fff" className="ms-2" />
+                    </button>
+                    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <button
+                                className="dropdown-item"
+                                onClick={() => {
+                                    localStorage.removeItem("token");
+                                    localStorage.removeItem("usuario");
+                                    window.location.href = "/login";
+                                }}
+                            >
+                                Cerrar sesión
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </header>

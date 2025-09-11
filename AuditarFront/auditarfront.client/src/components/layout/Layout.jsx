@@ -1,22 +1,29 @@
+import { Outlet } from "react-router-dom";
 import React from 'react';
 import Header from './Header';
 import Menu from './Menu';
 import Footer from './Footer';
+import Fund from './fund';
 
-const Layout = ({ children }) => {
+const Layout = ({ onLogin }) => {
     const [menuVisible, setMenuVisible] = React.useState(true);
     const toggleMenu = () => setMenuVisible((open) => !open);
 
+    React.useEffect(() => {
+        onLogin();
+    }, [onLogin]);
+
     const modo = "Inicio"; 
     
-
     return (
         <div className="d-flex flex-column min-vh-100">
+            <Fund />
             <div className="row h-100 flex-grow-1">
                 {/* Sidebar siempre a la izquierda */}
-                <div className={
-                    menuVisible ? "col-md-2" : "d-none"
-                }>
+                <div
+                    className={"sidebar-animated bg-transparent p-0 " + (menuVisible ? "col-md-2" : "")}
+                    style={{ width: menuVisible ? undefined : 0 }}
+                >
                     {menuVisible && <Menu toggleMenu={toggleMenu} />}
                 </div>
 
@@ -26,8 +33,7 @@ const Layout = ({ children }) => {
                     {/* Encabezado superior */}
                     <Header modo={modo} toggleMenu={toggleMenu} menuVisible={!menuVisible} />
                     <div className="flex-grow-1 d-flex flex-column">
-                        {/* Contenido principal de la página */}
-                        {children}
+                        <Outlet /> {/* <-- Aquí el cambio */}
                     </div>
                     {/* Pie de página al final visible */}
                     <Footer />

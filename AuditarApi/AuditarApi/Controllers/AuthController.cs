@@ -1,5 +1,7 @@
 ﻿using Dominio.ModuloSeguridad.Repositorio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 [ApiController]
@@ -7,10 +9,12 @@ using System.Threading.Tasks;
 public class AuthController : ControllerBase
 {
     private readonly AuthService _authService;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(AuthService authService)
+    public AuthController(AuthService authService, IConfiguration configuration)
     {
         _authService = authService;
+        _configuration = configuration;
     }
 
     [HttpPost("login")]
@@ -18,20 +22,25 @@ public class AuthController : ControllerBase
     {
         var usuario = await _authService.ValidarCredenciales(loginRequest.Correo, loginRequest.Password);
 
-        if (usuario == null)
+        if (usuario.OperacionExitosa && !usuario.ValidacionesNegocio)
         {
-            return Unauthorized(new { message = "Credenciales inválidas." });
+            var user = usuario.Vista[0];
+            user.Token = _authService.GenerarToken(user.Correo, user.Id, user.Rol, _configuration);
+            return Ok( usuario );
         }
-
-        // ... Generar token y respuesta ...
-        var response = new LoginResponseDto
+        else
         {
-            Id = usuario.UsuarioId,
-            NombreCompleto = $"{usuario.NombreUsuario} {usuario.ApellidoUsuario}",
-            Rol = usuario.Rol?.NombreRol ?? string.Empty,
-            Token = "TOKEN_DE_EJEMPLO_TEMPORAL" // Próximo paso: Generar un JWT real
-        };
+            return Unauthorized(new { message = usuario.Mensaje });
+        }
+    }
 
-        return Ok(response);
+    // --- ENDPOINT PROTEGIDO DE EJEMPLO ---
+    // Mantenemos este endpoint para que puedas probar que la autenticación con JWT funciona.
+    [HttpGet("protegido")]
+    [Authorize] // Para acceder aquí, se necesita un token JWT válido.
+    public IActionResult GetProtectedData()
+    {
+        var userEmail = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+        return Ok(new { message = $"Hola {userEmail}, tienes acceso a esta información secreta." });
     }
 }

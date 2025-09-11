@@ -1,7 +1,9 @@
 ﻿using Dominio.ModuloSeguridad.Repositorio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class SeguridadController : ControllerBase
@@ -17,40 +19,29 @@ public class SeguridadController : ControllerBase
     [HttpPost("RolObtener")]
     public IActionResult RolObtener([FromBody] RolVista rolRequest)
     {
-        var roles = _seguridadService.RolActivo(rolRequest.Estado);
-
-        if (roles == null || roles.Count == 0)
-        {
-            return Ok(new { message = "Sin Roles en el sistema" });
-        }
-        return Ok(roles);
+        var respuesta = _seguridadService.RolActivo(rolRequest.Estado);
+        return Ok(respuesta);
     }
 
     [HttpPost("RolInsertar")]
     public async Task<IActionResult> RolInsertar([FromBody] RolVista rol)
     {
-        var result = await _seguridadService.AddRolAsync(rol);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo insertar el rol." });
-        return Ok(result);
+        var respuesta = await _seguridadService.AddRolAsync(rol);
+        return Ok(respuesta);
     }
 
     [HttpPut("RolEditar")]
     public async Task<IActionResult> RolEditar([FromBody] RolVista rol)
     {
-        var result = await _seguridadService.UpdateRolAsync(rol);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo editar el rol." });
-        return Ok(result);
+        var respuesta = await _seguridadService.UpdateRolAsync(rol);
+        return Ok(respuesta);
     }
 
     [HttpDelete("RolEliminar/{rolId}")]
     public async Task<IActionResult> RolEliminar(int rolId)
     {
-        var eliminado = await _seguridadService.DeleteRolAsync(rolId);
-        if (!eliminado)
-            return NotFound(new { message = "No se encontró el rol a eliminar." });
-        return Ok(new { message = "Rol eliminado correctamente." });
+        var respuesta = await _seguridadService.DeleteRolAsync(rolId);
+        return Ok(respuesta);
     }
     #endregion
 
@@ -58,37 +49,39 @@ public class SeguridadController : ControllerBase
     [HttpPost("UsuarioObtener")]
     public async Task<IActionResult> UsuarioObtener([FromBody] UsuarioVista usuarioRequest)
     {
-        var usuario = await _seguridadService.GetByUsuarioAsync(usuarioRequest.Estado);
-        if (usuario == null)
-            return Ok(new { message = "Sin usuarios en el sistema" });
-        return Ok(usuario);
+        var respuesta = await _seguridadService.GetByUsuarioAsync(usuarioRequest.Estado);
+        return Ok(respuesta);
     }
 
     [HttpPost("UsuarioInsertar")]
+    [AllowAnonymous]
     public async Task<IActionResult> UsuarioInsertar([FromBody] UsuarioVista usuario)
     {
-        var result = await _seguridadService.AddUsuarioAsync(usuario);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo insertar el usuario." });
-        return Ok(result);
+        if (!string.IsNullOrEmpty(usuario.Password))
+        {
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword(usuario.Password);
+        }
+        else
+        {
+            usuario.Password = BCrypt.Net.BCrypt.HashPassword("Clave123+.");
+        }
+
+        var respuesta = await _seguridadService.AddUsuarioAsync(usuario);
+        return Ok(respuesta);
     }
 
     [HttpPut("UsuarioEditar")]
     public async Task<IActionResult> UsuarioEditar([FromBody] UsuarioVista usuario)
     {
-        var result = await _seguridadService.UpdateUsuarioAsync(usuario);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo editar el usuario." });
-        return Ok(result);
+        var respuesta = await _seguridadService.UpdateUsuarioAsync(usuario);
+        return Ok(respuesta);
     }
 
     [HttpDelete("UsuarioEliminar/{usuarioId}")]
     public async Task<IActionResult> UsuarioEliminar(int usuarioId)
     {
-        var eliminado = await _seguridadService.DeleteUsuarioAsync(usuarioId);
-        if (!eliminado)
-            return NotFound(new { message = "No se encontró el usuario a eliminar." });
-        return Ok(new { message = "Usuario eliminado correctamente." });
+        var respuesta = await _seguridadService.DeleteUsuarioAsync(usuarioId);
+        return Ok(respuesta);
     }
     #endregion
 
@@ -96,37 +89,29 @@ public class SeguridadController : ControllerBase
     [HttpPost("RolOperacionAccionObtener")]
     public IActionResult RolOperacionAccionObtener([FromBody] RolOperacionAccionVista request)
     {
-        var result = _seguridadService.GetByRolOperacionAccion(request.RolId, request.ServicioId, request.AccionId);
-        if (result == null || result.Count == 0)
-            return Ok(new { message = "Sin relaciones Rol-Operación-Acción en el sistema" });
-        return Ok(result);
+        var respuesta = _seguridadService.GetByRolOperacionAccion(request.RolId, request.ServicioId, request.AccionId);
+        return Ok(respuesta);
     }
 
     [HttpPost("RolOperacionAccionInsertar")]
     public async Task<IActionResult> RolOperacionAccionInsertar([FromBody] RolOperacionAccionVista entity)
     {
-        var result = await _seguridadService.AddRolOperacionAccionAsync(entity);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo insertar la relación." });
-        return Ok(result);
+        var respuesta = await _seguridadService.AddRolOperacionAccionAsync(entity);
+        return Ok(respuesta);
     }
 
     [HttpPut("RolOperacionAccionEditar")]
     public async Task<IActionResult> RolOperacionAccionEditar([FromBody] RolOperacionAccionVista entity)
     {
-        var result = await _seguridadService.UpdateRolOperacionAccionAsync(entity);
-        if (result == null)
-            return BadRequest(new { message = "No se pudo editar la relación." });
-        return Ok(result);
+        var respuesta = await _seguridadService.UpdateRolOperacionAccionAsync(entity);
+        return Ok(respuesta);
     }
 
     [HttpDelete("RolOperacionAccionEliminar/{id}")]
     public async Task<IActionResult> RolOperacionAccionEliminar(int id)
     {
-        var eliminado = await _seguridadService.DeleteRolOperacionAccionAsync(id);
-        if (!eliminado)
-            return NotFound(new { message = "No se encontró la relación a eliminar." });
-        return Ok(new { message = "Relación eliminada correctamente." });
+        var respuesta = await _seguridadService.DeleteRolOperacionAccionAsync(id);
+        return Ok(respuesta);
     }
     #endregion
 

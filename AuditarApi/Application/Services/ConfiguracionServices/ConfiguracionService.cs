@@ -1,6 +1,7 @@
 ﻿#region Usings
 using Dominio.Entities;
 using Dominio.ModuloConfiguracion.Repositorio;
+using Dominio.ModuloPages.Repositorio;
 using System;
 #endregion
 
@@ -27,7 +28,6 @@ public class ConfiguracionServices
     }
     #endregion
 
-
     #region Menus
     private List<MenuVista> MapToMenuVista(List<Menu> menus)
     {
@@ -38,7 +38,6 @@ public class ConfiguracionServices
             Url = r.UrlMenu,
             Icono = r.IconoMenu,
             Estado = r.EstadoMenu
-
         }).ToList();
     }
 
@@ -47,59 +46,119 @@ public class ConfiguracionServices
         return new Menu
         {
             MenuId = menuVista.Id ?? throw new InvalidOperationException("El Id de MenuVista no puede ser nulo."),
-            NombreMenu = menuVista.Nombre ?? throw new InvalidOperationException("El Id de MenuVista no puede ser nulo."),
+            NombreMenu = menuVista.Nombre ?? throw new InvalidOperationException("El Nombre de MenuVista no puede ser nulo."),
             UrlMenu = menuVista.Url,
             IconoMenu = menuVista.Icono,
             EstadoMenu = menuVista.Estado
         };
     }
 
-    public List<MenuVista>? MenuActivo(bool? Estado = null)
+    public RespuestaApp<MenuVista> MenuActivo(bool? Estado = null)
     {
-        List<Menu> menu = _menuRepository.GetByMenuAsync(Estado);
-        if (menu == null || !menu.Any())
+        var respuesta = new RespuestaApp<MenuVista>();
+        try
         {
-            return null;
+            List<Menu> menu = _menuRepository.GetByMenuAsync(Estado);
+            respuesta.Vista = MapToMenuVista(menu);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-
-        List<MenuVista> menuVista = MapToMenuVista(menu);
-
-        return menuVista;
-    }
-
-    public async Task<MenuVista?> AddMenuAsync(MenuVista menu)
-    {
-        Menu menuEntity = MapToMenu(menu);
-        var result = await _menuRepository.AddMenuAsync(menuEntity);
-        if (result == null) return null;
-        return new MenuVista
+        catch (Exception ex)
         {
-            Id = result.MenuId,
-            Nombre = result.NombreMenu,
-            Url = result.UrlMenu,
-            Icono = result.IconoMenu,
-            Estado = result.EstadoMenu
-        };
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<MenuVista?> UpdateMenuAsync(MenuVista menu)
+    public async Task<RespuestaApp<MenuVista>> AddMenuAsync(MenuVista menu)
     {
-        Menu menuEntity = MapToMenu(menu);
-        var result = await _menuRepository.UpdateMenuAsync(menuEntity);
-        if (result == null) return null;
-        return new MenuVista
+        var respuesta = new RespuestaApp<MenuVista>();
+        try
         {
-            Id = result.MenuId,
-            Nombre = result.NombreMenu,
-            Url = result.UrlMenu,
-            Icono = result.IconoMenu,
-            Estado = result.EstadoMenu
-        };
+            Menu menuEntity = MapToMenu(menu);
+            var result = await _menuRepository.AddMenuAsync(menuEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new MenuVista
+                {
+                    Id = result.MenuId,
+                    Nombre = result.NombreMenu,
+                    Url = result.UrlMenu,
+                    Icono = result.IconoMenu,
+                    Estado = result.EstadoMenu
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteMenuAsync(int menuId)
+    public async Task<RespuestaApp<MenuVista>> UpdateMenuAsync(MenuVista menu)
     {
-        return await _menuRepository.DeleteMenuAsync(menuId);
+        var respuesta = new RespuestaApp<MenuVista>();
+        try
+        {
+            Menu menuEntity = MapToMenu(menu);
+            var result = await _menuRepository.UpdateMenuAsync(menuEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new MenuVista
+                {
+                    Id = result.MenuId,
+                    Nombre = result.NombreMenu,
+                    Url = result.UrlMenu,
+                    Icono = result.IconoMenu,
+                    Estado = result.EstadoMenu
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
+    }
+
+    public async Task<RespuestaApp<bool>> DeleteMenuAsync(int menuId)
+    {
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _menuRepository.DeleteMenuAsync(menuId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 
@@ -125,49 +184,112 @@ public class ConfiguracionServices
         };
     }
 
-    public List<MenuRolVista>? MenuRolActivo(int? menuId = null, int? rolId = null)
+    public RespuestaApp<MenuRolVista> MenuRolActivo(int? menuId = null, int? rolId = null)
     {
-        var menuRols = _menuRolRepository.GetByMenuRolAsync(menuId, rolId);
-        if (menuRols == null || !menuRols.Any())
+        var respuesta = new RespuestaApp<MenuRolVista>();
+        try
         {
-            return null;
+            var menuRols = _menuRolRepository.GetByMenuRolAsync(menuId, rolId);
+            respuesta.Vista = MapToMenuRolVista(menuRols);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-        return MapToMenuRolVista(menuRols);
-    }
-
-    public async Task<MenuRolVista?> AddMenuRolAsync(MenuRolVista menuRol)
-    {
-        MenuRol menuRolEntity = MapToMenuRol(menuRol);
-        var result = await _menuRolRepository.AddMenuRolAsync(menuRolEntity);
-        if (result == null) return null;
-        return new MenuRolVista
+        catch (Exception ex)
         {
-            Id = result.MenuRolId,
-            MenuId = result.MenuId,
-            MenuNombre = result.Menu?.NombreMenu,
-            RolId = result.RolId,
-            RolNombre = result.Rol?.NombreRol
-        };
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<MenuRolVista?> UpdateMenuRolAsync(MenuRolVista menuRol)
+    public async Task<RespuestaApp<MenuRolVista>> AddMenuRolAsync(MenuRolVista menuRol)
     {
-        MenuRol menuRolEntity = MapToMenuRol(menuRol);
-        var result = await _menuRolRepository.UpdateMenuRolAsync(menuRolEntity);
-        if (result == null) return null;
-        return new MenuRolVista
+        var respuesta = new RespuestaApp<MenuRolVista>();
+        try
         {
-            Id = result.MenuRolId,
-            MenuId = result.MenuId,
-            MenuNombre = result.Menu?.NombreMenu,
-            RolId = result.RolId,
-            RolNombre = result.Rol?.NombreRol
-        };
+            MenuRol menuRolEntity = MapToMenuRol(menuRol);
+            var result = await _menuRolRepository.AddMenuRolAsync(menuRolEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new MenuRolVista
+                {
+                    Id = result.MenuRolId,
+                    MenuId = result.MenuId,
+                    MenuNombre = result.Menu?.NombreMenu,
+                    RolId = result.RolId,
+                    RolNombre = result.Rol?.NombreRol
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteMenuRolAsync(int menuRolId)
+    public async Task<RespuestaApp<MenuRolVista>> UpdateMenuRolAsync(MenuRolVista menuRol)
     {
-        return await _menuRolRepository.DeleteMenuRolAsync(menuRolId);
+        var respuesta = new RespuestaApp<MenuRolVista>();
+        try
+        {
+            MenuRol menuRolEntity = MapToMenuRol(menuRol);
+            var result = await _menuRolRepository.UpdateMenuRolAsync(menuRolEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new MenuRolVista
+                {
+                    Id = result.MenuRolId,
+                    MenuId = result.MenuId,
+                    MenuNombre = result.Menu?.NombreMenu,
+                    RolId = result.RolId,
+                    RolNombre = result.Rol?.NombreRol
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
+    }
+
+    public async Task<RespuestaApp<bool>> DeleteMenuRolAsync(int menuRolId)
+    {
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _menuRolRepository.DeleteMenuRolAsync(menuRolId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 
@@ -190,43 +312,106 @@ public class ConfiguracionServices
         };
     }
 
-    public List<AccionVista>? AccionActivo(int? accionId = null)
+    public RespuestaApp<AccionVista> AccionActivo(int? accionId = null)
     {
-        var acciones = _accionRepository.GetByAccionAsync(accionId);
-        if (acciones == null || !acciones.Any())
+        var respuesta = new RespuestaApp<AccionVista>();
+        try
         {
-            return null;
+            var acciones = _accionRepository.GetByAccionAsync(accionId);
+            respuesta.Vista = MapToAccionVista(acciones);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-        return MapToAccionVista(acciones);
-    }
-
-    public async Task<AccionVista?> AddAccionAsync(AccionVista accion)
-    {
-        Accion accionEntity = MapToAccion(accion);
-        var result = await _accionRepository.AddAccionAsync(accionEntity);
-        if (result == null) return null;
-        return new AccionVista
+        catch (Exception ex)
         {
-            Id = result.AccionId,
-            Nombre = result.NombreAccion
-        };
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<AccionVista?> UpdateAccionAsync(AccionVista accion)
+    public async Task<RespuestaApp<AccionVista>> AddAccionAsync(AccionVista accion)
     {
-        Accion accionEntity = MapToAccion(accion);
-        var result = await _accionRepository.UpdateAccionAsync(accionEntity);
-        if (result == null) return null;
-        return new AccionVista
+        var respuesta = new RespuestaApp<AccionVista>();
+        try
         {
-            Id = result.AccionId,
-            Nombre = result.NombreAccion
-        };
+            Accion accionEntity = MapToAccion(accion);
+            var result = await _accionRepository.AddAccionAsync(accionEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new AccionVista
+                {
+                    Id = result.AccionId,
+                    Nombre = result.NombreAccion
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteAccionAsync(int accionId)
+    public async Task<RespuestaApp<AccionVista>> UpdateAccionAsync(AccionVista accion)
     {
-        return await _accionRepository.DeleteAccionAsync(accionId);
+        var respuesta = new RespuestaApp<AccionVista>();
+        try
+        {
+            Accion accionEntity = MapToAccion(accion);
+            var result = await _accionRepository.UpdateAccionAsync(accionEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new AccionVista
+                {
+                    Id = result.AccionId,
+                    Nombre = result.NombreAccion
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
+    }
+
+    public async Task<RespuestaApp<bool>> DeleteAccionAsync(int accionId)
+    {
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _accionRepository.DeleteAccionAsync(accionId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 
@@ -248,43 +433,106 @@ public class ConfiguracionServices
         };
     }
 
-    public List<ServicioVista>? ServicioActivo(int? servicioId = null)
+    public RespuestaApp<ServicioVista> ServicioActivo(int? servicioId = null)
     {
-        var servicios = _servicioRepository.GetByServicioAsync(servicioId);
-        if (servicios == null || !servicios.Any())
+        var respuesta = new RespuestaApp<ServicioVista>();
+        try
         {
-            return null;
+            var servicios = _servicioRepository.GetByServicioAsync(servicioId);
+            respuesta.Vista = MapToServicioVista(servicios);
+            respuesta.OperacionExitosa = true;
+            respuesta.ValidacionesNegocio = false;
         }
-        return MapToServicioVista(servicios);
-    }
-
-    public async Task<ServicioVista?> AddServicioAsync(ServicioVista servicio)
-    {
-        Servicio servicioEntity = MapToServicio(servicio);
-        var result = await _servicioRepository.AddServicioAsync(servicioEntity);
-        if (result == null) return null;
-        return new ServicioVista
+        catch (Exception ex)
         {
-            Id = result.ServicioId,
-            Nombre = result.NombreServicio
-        };
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<ServicioVista?> UpdateServicioAsync(ServicioVista servicio)
+    public async Task<RespuestaApp<ServicioVista>> AddServicioAsync(ServicioVista servicio)
     {
-        Servicio servicioEntity = MapToServicio(servicio);
-        var result = await _servicioRepository.UpdateServicioAsync(servicioEntity);
-        if (result == null) return null;
-        return new ServicioVista
+        var respuesta = new RespuestaApp<ServicioVista>();
+        try
         {
-            Id = result.ServicioId,
-            Nombre = result.NombreServicio
-        };
+            Servicio servicioEntity = MapToServicio(servicio);
+            var result = await _servicioRepository.AddServicioAsync(servicioEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new ServicioVista
+                {
+                    Id = result.ServicioId,
+                    Nombre = result.NombreServicio
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
 
-    public async Task<bool> DeleteServicioAsync(int servicioId)
+    public async Task<RespuestaApp<ServicioVista>> UpdateServicioAsync(ServicioVista servicio)
     {
-        return await _servicioRepository.DeleteServicioAsync(servicioId);
+        var respuesta = new RespuestaApp<ServicioVista>();
+        try
+        {
+            Servicio servicioEntity = MapToServicio(servicio);
+            var result = await _servicioRepository.UpdateServicioAsync(servicioEntity);
+            if (result != null)
+            {
+                respuesta.Vista.Add(new ServicioVista
+                {
+                    Id = result.ServicioId,
+                    Nombre = result.NombreServicio
+                });
+                respuesta.OperacionExitosa = true;
+                respuesta.ValidacionesNegocio = false;
+            }
+            else
+            {
+                respuesta.OperacionExitosa = false;
+                respuesta.ValidacionesNegocio = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
+    }
+
+    public async Task<RespuestaApp<bool>> DeleteServicioAsync(int servicioId)
+    {
+        var respuesta = new RespuestaApp<bool>();
+        try
+        {
+            var eliminado = await _servicioRepository.DeleteServicioAsync(servicioId);
+            respuesta.Vista.Add(eliminado);
+            respuesta.OperacionExitosa = eliminado;
+            respuesta.ValidacionesNegocio = eliminado;
+        }
+        catch (Exception ex)
+        {
+            respuesta.OperacionExitosa = false;
+            respuesta.ValidacionesNegocio = false;
+            respuesta.Mensaje = ex.Message;
+        }
+        return respuesta;
     }
     #endregion
 }
