@@ -234,3 +234,4 @@ App_Data/
 !Necesarios/*.md
 !Necesarios/*.txt
 !Necesarios/*.json
+!Necesarios/*.msi
