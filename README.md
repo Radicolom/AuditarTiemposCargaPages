@@ -138,11 +138,12 @@ INSERT INTO Seguridad.Usuario (NombreUsuario, ApellidoUsuario, DocumentoUsuario,
 VALUES ('Admin', 'Principal', '123456789', 'Administrador@admin.com', '$2a$11$.7tOwnQLkkT9FNocj2ZEhem49xa5XUI042l.nOvqfwjFrZxfQmG1S', 1, 1);
 
 -- Insertar Men�s
-INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Dashboard', '/Inicio', 'home');
-INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Paginas Auditadas', '/auditar', 'description');
-INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Gestion de Usuarios', '/usuarios', 'group');
-INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Auditar Paginas', '/auditar', 'search');
-
+SET IDENTITY_INSERT Configuracion.Menu ON;
+INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (1,'Dashboard', '/', 'home',1);
+INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (2,'Gestión Paginas Auditadar', '/GestionPaguesAuditar', 'description',1);
+INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (3,'Gestión de Usuarios', '/GestionUnsuarios', 'group',1);
+INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (4,'Auditar Paginas', '/AuditarPague', 'search',1);
+SET IDENTITY_INSERT Configuracion.Menu OFF;
 ```
 
 > **Nota:** La contraseña está encriptada. Modifica los valores según tus necesidades antes de ejecutar los scripts.
