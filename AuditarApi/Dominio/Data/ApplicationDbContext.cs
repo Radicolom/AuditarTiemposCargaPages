@@ -41,7 +41,7 @@ public partial class ApplicationDbContext : DbContext
     {
         modelBuilder.Entity<Accion>(entity =>
         {
-            entity.HasKey(e => e.AccionId).HasName("PK__Accion__A60CAFC71DB83AD0");
+            entity.HasKey(e => e.AccionId).HasName("PK__Accion__A60CAFC7F29FA1AC");
 
             entity.ToTable("Accion", "Configuracion");
 
@@ -52,7 +52,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<AuditarLog>(entity =>
         {
-            entity.HasKey(e => e.AuditarLogId).HasName("PK__AuditarL__B5AFA16C15EF4371");
+            entity.HasKey(e => e.AuditarLogId).HasName("PK__AuditarL__B5AFA16C40361FC4");
 
             entity.ToTable("AuditarLog", "Pages");
 
@@ -80,11 +80,11 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<AuditarPagina>(entity =>
         {
-            entity.HasKey(e => e.AuditarPaginaId).HasName("PK__AuditarP__22CAB752501E6A94");
+            entity.HasKey(e => e.AuditarPaginaId).HasName("PK__AuditarP__22CAB7527470E753");
 
             entity.ToTable("AuditarPagina", "Pages");
 
-            entity.HasIndex(e => e.UrlAuditarPagina, "UQ__AuditarP__3E2798B278130ECB").IsUnique();
+            entity.HasIndex(e => e.UrlAuditarPagina, "UQ__AuditarP__3E2798B2A7EDF1C0").IsUnique();
 
             entity.Property(e => e.EstadoAuditarPagina).HasDefaultValue(true);
             entity.Property(e => e.FechaCreacionAuditarPagina)
@@ -104,11 +104,10 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Menu>(entity =>
         {
-            entity.HasKey(e => e.MenuId).HasName("PK__Menu__C99ED2306AE753EB");
+            entity.HasKey(e => e.MenuId).HasName("PK__Menu__C99ED230FF7C249D");
 
             entity.ToTable("Menu", "Configuracion");
 
-            entity.Property(e => e.EstadoMenu).HasDefaultValue(true);
             entity.Property(e => e.IconoMenu)
                 .HasMaxLength(500)
                 .IsUnicode(false);
@@ -120,7 +119,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<MenuRol>(entity =>
         {
-            entity.HasKey(e => e.MenuRolId).HasName("PK__MenuRol__6640AD0CF423469B");
+            entity.HasKey(e => e.MenuRolId).HasName("PK__MenuRol__6640AD0C9286098E");
 
             entity.ToTable("MenuRol", "Configuracion");
 
@@ -135,11 +134,10 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Rol>(entity =>
         {
-            entity.HasKey(e => e.RolId).HasName("PK__Rol__F92302F15C41FE18");
+            entity.HasKey(e => e.RolId).HasName("PK__Rol__F92302F135AE38BB");
 
             entity.ToTable("Rol", "Seguridad");
 
-            entity.Property(e => e.EstadoRol).HasDefaultValue(true);
             entity.Property(e => e.NombreRol)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -147,7 +145,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<RolOperacionAccion>(entity =>
         {
-            entity.HasKey(e => e.RolOperacionAccionId).HasName("PK__RolOpera__D2B227DEFC9DB4BC");
+            entity.HasKey(e => e.RolOperacionAccionId).HasName("PK__RolOpera__D2B227DECE877EBC");
 
             entity.ToTable("RolOperacionAccion", "Seguridad");
 
@@ -166,7 +164,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Servicio>(entity =>
         {
-            entity.HasKey(e => e.ServicioId).HasName("PK__Servicio__D5AEECC246E07806");
+            entity.HasKey(e => e.ServicioId).HasName("PK__Servicio__D5AEECC214E29B7B");
 
             entity.ToTable("Servicio", "Configuracion");
 
@@ -177,31 +175,27 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.UsuarioId).HasName("PK__Usuario__2B3DE7B86BF034D7");
+            entity.HasKey(e => e.UsuarioId).HasName("PK__Usuario__2B3DE7B81C0B815A");
 
             entity.ToTable("Usuario", "Seguridad");
 
-            entity.HasIndex(e => e.CorreoUsuario, "UQ__Usuario__365498780F7AD261").IsUnique();
+            entity.HasIndex(e => e.CorreoUsuario, "UQ__Usuario__365498782462CAFA").IsUnique();
 
-            entity.HasIndex(e => e.DocumentoUsuario, "UQ__Usuario__ACE86E55D3BACC2B").IsUnique();
+            entity.HasIndex(e => e.DocumentoUsuario, "UQ__Usuario__ACE86E55C9CCE580").IsUnique();
 
             entity.Property(e => e.ApellidoUsuario)
                 .HasMaxLength(150)
                 .IsUnicode(false);
-            entity.Property(e => e.AutenticacionDobleFactor).HasDefaultValue(false);
             entity.Property(e => e.CorreoUsuario)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.DocumentoUsuario)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.EmailConfirmed).HasDefaultValue(false);
-            entity.Property(e => e.EstadoUsuario).HasDefaultValue(true);
             entity.Property(e => e.NombreUsuario)
                 .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.PasswordUsuario).IsUnicode(false);
-            entity.Property(e => e.TelefonoConfirmadoUsuario).HasDefaultValue(false);
             entity.Property(e => e.TelefonoUsuario)
                 .HasMaxLength(12)
                 .IsUnicode(false);

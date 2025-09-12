@@ -3,160 +3,157 @@ USE AuditarPague;
 	BEGIN TRANSACTION; 
 		BEGIN TRY
 
-			 -- Creación de esquemas
+			 -- Creaci?n de esquemas
 			-- Se usa EXEC para ejecutar cada CREATE SCHEMA en su propio lote y se especifica AUTHORIZATION dbo para evitar conflictos.
 			IF SCHEMA_ID('Seguridad') IS NULL EXEC('CREATE SCHEMA Seguridad AUTHORIZATION dbo');
 			IF SCHEMA_ID('Configuracion') IS NULL EXEC('CREATE SCHEMA Configuracion AUTHORIZATION dbo');
 
-			CREATE TABLE Seguridad.Rol (
-				RolId INT IDENTITY(1,1) PRIMARY KEY,
-				NombreRol VARCHAR(100) NOT NULL,
-				EstadoRol BIT DEFAULT 'true'
-			);
-			
+			--drop table Seguridad.Rol
+			--drop table Seguridad.Usuario
+			--drop table Configuracion.Menu
+			--drop table Configuracion.MenuRol
+			--drop table Configuracion.Accion
+			--drop table Configuracion.Servicio
+			--drop table Seguridad.RolOperacionAccion
+			--drop table Pages.AuditarPagina
+			--drop table Pages.AuditarLog
 
-			CREATE TABLE Seguridad.Usuario(
-				UsuarioId INT IDENTITY(1,1) PRIMARY KEY,
-				NombreUsuario VARCHAR(150) NOT NULL,
-				ApellidoUsuario VARCHAR(150) NOT NULL,
-				DocumentoUsuario VARCHAR(20) UNIQUE NOT NULL,
-				CorreoUsuario VARCHAR(255) UNIQUE NOT NULL,
-				EmailConfirmed BIT DEFAULT 0,
-				PasswordUsuario VARCHAR(MAX) NOT NULL,
-				TelefonoUsuario VARCHAR(12),
-				TelefonoConfirmadoUsuario BIT DEFAULT 0,
-				AutenticacionDobleFactor BIT DEFAULT 0,
-				AutenticacionIntentos INT,
-				EstadoUsuario BIT DEFAULT 'true',
-				RolId INT
-			);
-			
+			IF SCHEMA_ID('Seguridad') IS NULL EXEC('CREATE SCHEMA Seguridad AUTHORIZATION dbo');
 
-			ALTER TABLE Seguridad.Usuario 
-			WITH CHECK ADD CONSTRAINT FK_Usuario_Rol FOREIGN KEY (RolId)
-			REFERENCES Seguridad.Rol (RolId);
-			
+IF SCHEMA_ID('Configuracion') IS NULL EXEC('CREATE SCHEMA Configuracion AUTHORIZATION dbo');
 
-			CREATE TABLE Configuracion.Menu(
-				MenuId INT IDENTITY(1,1) PRIMARY KEY,
-				NombreMenu VARCHAR(150) NOT NULL,
-				UrlMenu VARCHAR(MAX),
-				IconoMenu VARCHAR(500),
-				EstadoMenu BIT DEFAULT 'True'
-			);
-			
+IF SCHEMA_ID('Pages') IS NULL EXEC('CREATE SCHEMA Pages AUTHORIZATION dbo');
 
-			CREATE TABLE Configuracion.MenuRol(
-				MenuRolId INT IDENTITY(1,1) PRIMARY KEY,
-				MenuId INT,
-				RolId INT
-			);
-			
+ 
+CREATE TABLE [Configuracion].[Accion] (
 
-			ALTER TABLE Configuracion.MenuRol
-			WITH CHECK ADD CONSTRAINT FK_MenuRol_Rol FOREIGN KEY (RolId)
-			REFERENCES Seguridad.Rol (RolId);
-			
-
-			ALTER TABLE Configuracion.MenuRol
-			WITH CHECK ADD CONSTRAINT FK_MenuRol_Menu FOREIGN KEY (MenuId)
-			REFERENCES Configuracion.Menu (MenuId);
-			
-
-			-- Tabla para definir acciones/operaciones (Ej: Crear, Leer, Actualizar, Borrar)
-			CREATE TABLE Configuracion.Accion(
-				AccionId INT IDENTITY(1,1) PRIMARY KEY,
-				NombreAccion VARCHAR(50) NOT NULL
-			);
-			
-
-			-- Tabla para definir servicios/módulos del sistema (Ej: Usuarios, Productos)
-			CREATE TABLE Configuracion.Servicio (
-				ServicioId INT IDENTITY(1,1) PRIMARY KEY,
-				NombreServicio VARCHAR(100) NOT NULL
-			);
-			
-
-			-- Tabla para asignar permisos detallados (qué Rol puede hacer qué Accion sobre qué Servicio)
-			CREATE TABLE Seguridad.RolOperacionAccion (
-				RolOperacionAccionId INT IDENTITY(1,1) PRIMARY KEY,
-				RolId INT,
-				ServicioId INT,
-				AccionId INT
-			);
-			
-
-			ALTER TABLE Seguridad.RolOperacionAccion
-			WITH CHECK ADD CONSTRAINT FK_RolOperacionAccion_Rol FOREIGN KEY (RolId)
-			REFERENCES Seguridad.Rol (RolId);
-			
-
-			ALTER TABLE Seguridad.RolOperacionAccion
-			WITH CHECK ADD CONSTRAINT FK_RolOperacionAccion_Servicio FOREIGN KEY (ServicioId)
-			REFERENCES Configuracion.Servicio (ServicioId);
-			
-
-			ALTER TABLE Seguridad.RolOperacionAccion
-			WITH CHECK ADD CONSTRAINT FK_RolOperacionAccion_Accion FOREIGN KEY (AccionId)
-			REFERENCES Configuracion.Accion (AccionId);
-			
-
-			-- =========== NUEVOS ESQUEMAS PARA LA EMPRESA DE ROPA ===========
-			
-			IF SCHEMA_ID('Pages') IS NULL EXEC('CREATE SCHEMA Pages AUTHORIZATION dbo');
-
-			-- =====================================================================
-			-- TABLAS DEL NECIO PRINCIPAL (AUDITORÍA DE PÁGINAS)
-			-- =====================================================================
-
-			-- Tabla para registrar las páginas web que se van a auditar
-			CREATE TABLE Pages.AuditarPagina (
-				AuditarPaginaId INT IDENTITY(1,1) PRIMARY KEY,
-				UrlAuditarPagina VARCHAR(1700) NOT NULL UNIQUE,
-				NombreAuditarPagina VARCHAR(255) NOT NULL, -- Un nombre amigable para la página
-				EstadoAuditarPagina BIT DEFAULT 'true',
-				FechaCreacionAuditarPagina DATETIME DEFAULT GETDATE(),
-				UsuarioId INT
-			);
-			
-
-			ALTER TABLE Pages.AuditarPagina
-			WITH CHECK ADD CONSTRAINT FK_AuditarPagina_Usuario FOREIGN KEY (UsuarioId)
-			REFERENCES Seguridad.Usuario(UsuarioId);
-			
+    [AccionId] INT IDENTITY(1,1) NOT NULL,
+    [NombreAccion] VARCHAR(50) NOT NULL
+    CONSTRAINT [PK__Accion__A60CAFC7F29FA1AC] PRIMARY KEY ([AccionId])
+);
 
 
-			-- Tabla para almacenar cada registro de auditoría con sus métricas de rendimiento
-			CREATE TABLE Pages.AuditarLog (
-				-- Columnas de Identificación y Control
-				AuditarLogId INT IDENTITY(1,1) PRIMARY KEY,
-				AuditarPaginaId INT NOT NULL, -- FK a la tabla de páginas que auditas
-				FechaCreacion DATETIME NOT NULL DEFAULT GETDATE(),
-				EstadoAuditarPagina BIT NOT NULL,
-    
-				-- Métrica Principal de Google
-				PerformanceScore INT NULL, -- Puntuación general de rendimiento (0-100)
-    
-				-- Métricas de Tiempo Clave (las que solicitaste)
-				TimeToFirstByteMs INT NULL,     -- TTFB (ms), representa la respuesta del servidor
-				DomProcessingTimeMs INT NULL,   -- Tiempo de procesamiento del DOM (ms)
-				PageLoadTimeMs INT NULL,        -- Tiempo hasta que la página es interactiva (TTI)
-    
-				-- Métricas Modernas (Core Web Vitals y otras)
-				FcpValue VARCHAR(50) NULL,      -- Valor de First Contentful Paint (e.g., "1.2 s")
-				LcpValue VARCHAR(50) NULL,      -- Valor de Largest Contentful Paint (e.g., "2.5 s")
-				ClsValue VARCHAR(50) NULL,      -- Valor de Cumulative Layout Shift (e.g., "0.01")
-				SpeedIndexValue VARCHAR(50) NULL -- Valor de Speed Index (e.g., "3.4 s")
-    
-				-- Podrías añadir también las puntuaciones de cada métrica si lo necesitas
-				-- FcpScore INT NULL,
-				-- LcpScore INT NULL,
-				-- ClsScore INT NULL
-			);
+CREATE TABLE [Configuracion].[Menu] (
 
-			ALTER TABLE Pages.AuditarLog
-			WITH CHECK ADD CONSTRAINT FK_AuditarLog_AuditarPagina FOREIGN KEY (AuditarPaginaId)
-			REFERENCES Pages.AuditarPagina(AuditarPaginaId);
+    [MenuId] INT IDENTITY(1,1) NOT NULL,
+    [NombreMenu] VARCHAR(150) NOT NULL,
+    [UrlMenu] VARCHAR(MAX) NULL,
+    [IconoMenu] VARCHAR(500) NULL,
+    [EstadoMenu] BIT NULL
+    CONSTRAINT [PK__Menu__C99ED230FF7C249D] PRIMARY KEY ([MenuId])
+);
+
+
+CREATE TABLE [Configuracion].[MenuRol] (
+
+    [MenuRolId] INT IDENTITY(1,1) NOT NULL,
+    [MenuId] INT NULL,
+    [RolId] INT NULL
+    CONSTRAINT [PK__MenuRol__6640AD0C9286098E] PRIMARY KEY ([MenuRolId])
+);
+
+
+CREATE TABLE [Configuracion].[Servicio] (
+
+    [ServicioId] INT IDENTITY(1,1) NOT NULL,
+    [NombreServicio] VARCHAR(100) NOT NULL
+    CONSTRAINT [PK__Servicio__D5AEECC214E29B7B] PRIMARY KEY ([ServicioId])
+);
+
+CREATE TABLE [Seguridad].[Rol] (
+
+    [RolId] INT IDENTITY(1,1) NOT NULL,
+    [NombreRol] VARCHAR(100) NOT NULL,
+    [EstadoRol] BIT NULL
+    CONSTRAINT [PK__Rol__F92302F135AE38BB] PRIMARY KEY ([RolId])
+);
+
+
+CREATE TABLE [Seguridad].[RolOperacionAccion] (
+
+    [RolOperacionAccionId] INT IDENTITY(1,1) NOT NULL,
+    [RolId] INT NULL,
+    [ServicioId] INT NULL,
+    [AccionId] INT NULL
+    CONSTRAINT [PK__RolOpera__D2B227DECE877EBC] PRIMARY KEY ([RolOperacionAccionId])
+);
+
+
+CREATE TABLE [Seguridad].[Usuario] (
+
+    [UsuarioId] INT IDENTITY(1,1) NOT NULL,
+    [NombreUsuario] VARCHAR(150) NOT NULL,
+    [ApellidoUsuario] VARCHAR(150) NOT NULL,
+    [DocumentoUsuario] VARCHAR(20) NOT NULL,
+    [CorreoUsuario] VARCHAR(255) NOT NULL,
+    [EmailConfirmed] BIT NULL,
+    [PasswordUsuario] VARCHAR(MAX) NOT NULL,
+    [TelefonoUsuario] VARCHAR(12) NULL,
+    [TelefonoConfirmadoUsuario] BIT NULL,
+    [AutenticacionDobleFactor] BIT NULL,
+    [AutenticacionIntentos] INT NULL,
+    [EstadoUsuario] BIT NULL,
+    [RolId] INT NULL
+    CONSTRAINT [PK__Usuario__2B3DE7B81C0B815A] PRIMARY KEY ([UsuarioId])
+);
+
+
+CREATE TABLE [Pages].[AuditarPagina] (
+
+    [AuditarPaginaId] INT IDENTITY(1,1) NOT NULL,
+    [UrlAuditarPagina] VARCHAR(1700) NOT NULL,
+    [NombreAuditarPagina] VARCHAR(255) NOT NULL,
+    [FechaCreacionAuditarPagina]  DATETIME NULL DEFAULT GETDATE(),
+    [EstadoAuditarPagina] BIT DEFAULT 'True',
+    [UsuarioId] INT NULL,
+    CONSTRAINT [PK__AuditarP__22CAB7527470E753] PRIMARY KEY ([AuditarPaginaId])
+);
+
+
+CREATE TABLE [Pages].[AuditarLog] (
+
+    [AuditarLogId] INT IDENTITY(1,1) NOT NULL,
+    [AuditarPaginaId] INT NOT NULL,
+    [FechaCreacion]  DATETIME NOT NULL DEFAULT GETDATE(),
+    [EstadoAuditarPagina] BIT NOT NULL,
+    [PerformanceScore] INT NULL,
+    [TimeToFirstByteMs] INT NULL,
+    [DomProcessingTimeMs] INT NULL,
+    [PageLoadTimeMs] INT NULL,
+    [FcpValue] VARCHAR(50) NULL,
+    [LcpValue] VARCHAR(50) NULL,
+    [ClsValue] VARCHAR(50) NULL,
+    [SpeedIndexValue] VARCHAR(50) NULL
+    CONSTRAINT [PK__AuditarL__B5AFA16C40361FC4] PRIMARY KEY ([AuditarLogId])
+);
+
+
+
+
+ALTER TABLE [Pages].[AuditarPagina] ADD CONSTRAINT [UQ__AuditarP__3E2798B2A7EDF1C0] UNIQUE ([UrlAuditarPagina]);
+
+ALTER TABLE [Seguridad].[Usuario] ADD CONSTRAINT [UQ__Usuario__365498782462CAFA] UNIQUE ([CorreoUsuario]);
+
+ALTER TABLE [Seguridad].[Usuario] ADD CONSTRAINT [UQ__Usuario__ACE86E55C9CCE580] UNIQUE ([DocumentoUsuario]);
+
+ 
+ALTER TABLE [Seguridad].[RolOperacionAccion] WITH CHECK ADD CONSTRAINT [FK_RolOperacionAccion_Rol] FOREIGN KEY([RolId]) REFERENCES [Seguridad].[Rol]([RolId]);
+
+ALTER TABLE [Seguridad].[RolOperacionAccion] WITH CHECK ADD CONSTRAINT [FK_RolOperacionAccion_Servicio] FOREIGN KEY([ServicioId]) REFERENCES [Configuracion].[Servicio]([ServicioId]);
+
+ALTER TABLE [Seguridad].[RolOperacionAccion] WITH CHECK ADD CONSTRAINT [FK_RolOperacionAccion_Accion] FOREIGN KEY([AccionId]) REFERENCES [Configuracion].[Accion]([AccionId]);
+
+ALTER TABLE [Seguridad].[Usuario] WITH CHECK ADD CONSTRAINT [FK_Usuario_Rol] FOREIGN KEY([RolId]) REFERENCES [Seguridad].[Rol]([RolId]);
+
+ALTER TABLE [Configuracion].[MenuRol] WITH CHECK ADD CONSTRAINT [FK_MenuRol_Rol] FOREIGN KEY([RolId]) REFERENCES [Seguridad].[Rol]([RolId]);
+
+ALTER TABLE [Configuracion].[MenuRol] WITH CHECK ADD CONSTRAINT [FK_MenuRol_Menu] FOREIGN KEY([MenuId]) REFERENCES [Configuracion].[Menu]([MenuId]);
+
+ALTER TABLE [Pages].[AuditarPagina] WITH CHECK ADD CONSTRAINT [FK_AuditarPagina_Usuario] FOREIGN KEY([UsuarioId]) REFERENCES [Seguridad].[Usuario]([UsuarioId]);
+
+ALTER TABLE [Pages].[AuditarLog] WITH CHECK ADD CONSTRAINT [FK_AuditarLog_AuditarPagina] FOREIGN KEY([AuditarPaginaId]) REFERENCES [Pages].[AuditarPagina]([AuditarPaginaId]);
+
+
 
 
 
