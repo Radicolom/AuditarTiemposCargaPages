@@ -11,9 +11,9 @@ public partial class AuditarPagina
 
     public string NombreAuditarPagina { get; set; } = null!;
 
-    public bool? EstadoAuditarPagina { get; set; }
-
     public DateTime? FechaCreacionAuditarPagina { get; set; }
+
+    public bool? EstadoAuditarPagina { get; set; }
 
     public int? UsuarioId { get; set; }
 

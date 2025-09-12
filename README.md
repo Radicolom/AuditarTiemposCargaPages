@@ -1,3 +1,12 @@
+## Enlace al Proyecto
+
+Accede al frontend desplegado en el siguiente enlace:  
+[https://frontapi.somee.com/](http://frontapi.somee.com/)
+
+**Credenciales de acceso de prueba:**  
+- **Usuario:** `Administrador@admin.com`  
+- **Contraseña:** `Clave123+.`
+
 # AuditarTiemposCargaPages
 
 Proyecto para auditoría de tiempos de carga de páginas web.
@@ -28,14 +37,31 @@ Proyecto para auditoría de tiempos de carga de páginas web.
    - En la carpeta `Necesarios/` se incluyen:
      - Configuración exportada de Visual Studio 2022
      - Instalador de Node.js (node-v22.19.0-x64.msi)
+3. **Configuración de la API PageSpeed Insights**
+    - Accede a la [biblioteca de APIs de Google Cloud](https://console.cloud.google.com/apis/library/pagespeedonline.googleapis.com) y selecciona la API de PageSpeed Insights.
+    - Verifica que tienes seleccionado el proyecto correcto en la parte superior (debe ser el mismo donde generaste tu clave de API).
+    - En la página de la API, localiza el botón azul principal:
+        - Si aparece "HABILITAR", haz clic para activar la API. Espera a que el proceso finalice; el botón cambiará a "GESTIONAR" cuando la API esté habilitada correctamente.
+    
+4. **Uso de la API en Producción**  
+  - Si no deseas ejecutar la API localmente, puedes configurar el frontend para consumir la API desplegada en producción.  
+  - Para ello, edita el archivo `.env` ubicado en:  
+    ```
+    AuditarTiemposCargaPages/
+    └── AuditarFront/
+      └── auditarfront.client/
+          └── .env
+    ```
+  - Cambia la línea:
+    ```
+    VITE_API_URL=https://localhost:7169/api/
+    ```
+    por:
+    ```
+    VITE_API_URL=https://Radicolom2402.somee.com/api/
+    ```
+  - Así, el frontend utilizará directamente la API publicada en el entorno de producción.
 
-3. **Configuración PageSpeed Insights API**
-  1. Ve a la biblioteca de APIs de Google Cloud y busca o ve directamente a la página de la API de PageSpeed Insights:
-https://console.cloud.google.com/apis/library/pagespeedonline.googleapis.com
- 2. Asegúrate de tener seleccionado el proyecto correcto en la parte superior de la página (el mismo proyecto donde creaste tu clave de API).
-
- 3. En la página de la API, verás un botón azul grande.
-    - Si el botón dice "HABILITAR", ¡esa es la causa del problema! Haz clic en él y espera a que se active. Una vez que termine, la página se recargará y el botón dirá "GESTIONAR".
 
 ## Ejecución del Proyecto
 
@@ -79,7 +105,7 @@ AuditarTiemposCargaPages/
 │   └── AuditarFront.Server/   # Servidor frontend
 ├── Necesarios/                # Herramientas y configuraciones
 │   ├── node-v22.19.0-x64.msi # Instalador Node.js
-│   └── 
+│   └── ScripsSQL             # Ejecutables (Mapeo tablas BD)
 └── README.md                  # Este archivo
 ```
 
@@ -102,27 +128,20 @@ AuditarTiemposCargaPages/
 
 ## Scripts de Inserción Inicial
 
-A continuación se incluyen scripts SQL para poblar las tablas principales de seguridad con datos iniciales:
+A continuación se incluyen scripts SQL para poblar las tablas principales de seguridad con datos iniciales. La contraseña actual es (Clave123+.):
 
 ```sql
--- Insertar roles predeterminados
+-- Insertar Rol Admin
 INSERT INTO Seguridad.Rol (NombreRol, EstadoRol) VALUES ('Administrador', 1);
-INSERT INTO Seguridad.Rol (NombreRol, EstadoRol) VALUES ('Usuario', 1);
+-- Insertar Usuario Admin
+INSERT INTO Seguridad.Usuario (NombreUsuario, ApellidoUsuario, DocumentoUsuario, CorreoUsuario, PasswordUsuario, RolId, EmailConfirmed)
+VALUES ('Admin', 'Principal', '123456789', 'Administrador@admin.com', '$2a$11$.7tOwnQLkkT9FNocj2ZEhem49xa5XUI042l.nOvqfwjFrZxfQmG1S', 1, 1);
 
--- Insertar usuario administrador por defecto
-INSERT INTO Seguridad.Usuario (NombreUsuario,ApellidoUsuario,DocumentoUsuario,CorreoUsuario,EmailConfirmed,
-  PasswordUsuario,
-  TelefonoUsuario,TelefonoConfirmadoUsuario,AutenticacionDobleFactor,AutenticacionIntentos,RolId
-) VALUES (
-  'Admin','Admin','1010101010','Admin@Admin.com',1,
-  '$2a$11$NlM8Zv23PYYOwgAZJ7IvGOPv1S4gcSUt04x.Q0nLaQXBjnJCcYIDG',
-  '3005551234',1,0,0,1);
--- Insertar los menús para las 4 páginas principales
-INSERT INTO configuracion.Menu (NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES 
-('Inicio', '/inicio', 'home', 1),
-('Gestión Páginas Auditar', '/GestionPaguesAuditar', 'edit', 1),
-('Gestión de Usuarios', '/GestionUsuarios', 'users', 1),
-('Auditar Página', '/AuditarPague', 'search', 1);
+-- Insertar Men�s
+INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Dashboard', '/Inicio', 'home');
+INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Paginas Auditadas', '/auditar', 'description');
+INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Gestion de Usuarios', '/usuarios', 'group');
+INSERT INTO Configuracion.Menu (NombreMenu, UrlMenu, IconoMenu) VALUES ('Auditar Paginas', '/auditar', 'search');
 
 ```
 
