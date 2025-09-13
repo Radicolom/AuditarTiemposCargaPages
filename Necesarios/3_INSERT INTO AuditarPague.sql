@@ -19,8 +19,8 @@ GO
 			SET IDENTITY_INSERT Configuracion.Menu ON;
 
 			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (1,'Dashboard', '/', 'home',1);
-			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (2,'Gestion Paginas Auditadar', '/GestionPaguesAuditar', 'description',1);
-			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (3,'Gestion de Usuarios', '/GestionUnsuarios', 'group',1);
+			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (2,'Gestión Paginas Auditadar', '/GestionPaguesAuditar', 'description',1);
+			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (3,'Gestión de Usuarios', '/GestionUnsuarios', 'group',1);
 			INSERT INTO Configuracion.Menu (MenuId, NombreMenu, UrlMenu, IconoMenu, EstadoMenu) VALUES (4,'Auditar Paginas', '/AuditarPague', 'search',1);
 
 			SET IDENTITY_INSERT Configuracion.Menu OFF;

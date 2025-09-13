@@ -104,8 +104,9 @@ AuditarTiemposCargaPages/
 │   ├── auditarfront.client/   # Cliente web
 │   └── AuditarFront.Server/   # Servidor frontend
 ├── Necesarios/                # Herramientas y configuraciones
-│   ├── node-v22.19.0-x64.msi # Instalador Node.js
-│   └── ScripsSQL             # Ejecutables (Mapeo tablas BD)
+│   ├── node-v22.19.0-x64.msi  # Instalador Node.js
+│   ├── .vsconfig              # Configuración (Visual Studio 2022)
+│   └── ScripsSQL              # Ejecutables (Mapeo tablas BD)
 └── README.md                  # Este archivo
 ```
 
